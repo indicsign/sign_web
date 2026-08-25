@@ -79,6 +79,7 @@ export const slides = {
     play: 'Play the slides',
     of: 'of',
   },
+  sound: { on: 'Turn the sound off', off: 'Turn the sound on' },
   // No longer shown on the page — it is the video's accessible name only.
   videoLabel: 'The same sentence in Indian Sign Language',
   items: [

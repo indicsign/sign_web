@@ -80,8 +80,6 @@
   padding-top: var(--space-3);
 }
 
-/* The scene is decorative and the target reader is on a desktop screen, so narrow
-   viewports never render it — and therefore never download the player either. */
 .units__scenes {
   display: grid;
   gap: var(--space-3);
@@ -92,7 +90,18 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Side by side under the list rather than hidden. Stacked they would push the page
+     a whole screen longer, and vertical space is the scarce one on a phone. */
   .units__scenes {
-    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-self: center;
+    max-width: 26rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 26rem) {
+  .units__scenes {
+    max-width: 18rem;
   }
 }
