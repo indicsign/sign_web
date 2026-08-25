@@ -10,6 +10,11 @@ COPY . .
 RUN npm run build
 
 FROM nginx:1.27-alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# As a template rather than a finished conf, so the image's envsubst entrypoint
+# can substitute ${PORT} before nginx reads it. It renders to
+# /etc/nginx/conf.d/default.conf, replacing the packaged one.
+COPY nginx.conf /etc/nginx/templates/default.conf.template
+# Overridden by the platform wherever the platform assigns the port.
+ENV PORT=80
 COPY --from=build /app/dist /usr/share/nginx/html/full/indicai
 EXPOSE 80
