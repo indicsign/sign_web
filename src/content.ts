@@ -71,7 +71,14 @@ export type Slide = {
 }
 
 export const slides = {
-  nav: { pick: 'Show' },
+  nav: {
+    pick: 'Show',
+    prev: 'Previous sentence',
+    next: 'Next sentence',
+    stop: 'Pause the slides',
+    play: 'Play the slides',
+    of: 'of',
+  },
   // No longer shown on the page — it is the video's accessible name only.
   videoLabel: 'The same sentence in Indian Sign Language',
   items: [

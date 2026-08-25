@@ -22,6 +22,8 @@
   --color-wrong: #a8321f;
   --color-wrong-wash: #fbeae7;
   --color-line: #dbe3ec;
+  /* A line that has to read as hovered rather than merely present. */
+  --color-line-strong: #b9c6d6;
 
   /* Shape Coding, taken from the sentence artwork in "A Boy". The word colours keep
      the artwork's hues but are darkened to clear 4.5:1 on the grey fill — the

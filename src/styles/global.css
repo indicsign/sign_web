@@ -67,6 +67,17 @@ button {
   max-width: var(--measure);
 }
 
+/* Read aloud, never drawn — for text a screen reader needs and the page already
+   says another way. */
+.visually-hidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .section {
   padding-block: var(--space-7);
 }
