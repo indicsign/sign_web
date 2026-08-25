@@ -1,0 +1,66 @@
+.vocabulary__label {
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+}
+
+.vocabulary__list {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.word {
+  background-color: var(--color-raised);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.word__head {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  justify-content: space-between;
+}
+
+.word__base {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 800;
+}
+
+.word__kind {
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+}
+
+/* The past form carries the page's past colour, so the vocabulary list and the tense
+   labels speak one language. */
+.word__past {
+  font-size: var(--step--1);
+}
+
+.word__past strong {
+  background-color: var(--color-past-wash);
+  border-radius: var(--radius-pill);
+  color: var(--color-past);
+  padding-inline: var(--space-2);
+}
+
+.word__gloss {
+  border-top: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+  padding-top: var(--space-3);
+}

@@ -1,0 +1,14 @@
+node_modules
+dist
+.git
+.github
+.DS_Store
+*.local
+claude.md
+CLAUDE.md
+
+# Stray top-level copies of the lesson videos; the real ones live in
+# src/assets/video and are imported by the hero.
+*.mp4
+!src/assets/video
+A Boy

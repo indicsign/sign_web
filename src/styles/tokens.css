@@ -1,0 +1,71 @@
+:root {
+  /* Palette — taken from the logo. #0e2654 is the wordmark navy and #2b79be the
+     circuit blue; the action colour is that blue darkened to #1f6099, because the
+     logo blue itself only reaches 4.27:1 on the page background and has to clear
+     4.5:1 as link and button text. */
+  --color-ink: #0e2654;
+  --color-ink-soft: #54607a;
+  --color-surface: #f4f7fb;
+  --color-raised: #ffffff;
+  --color-accent: #1f6099;
+  --color-accent-ink: #ffffff;
+  --color-accent-strong: #1c588c;
+  --color-accent-wash: #e8f0f8;
+  /* Grammar colours carry tense and nothing else, so the action colour above
+     never competes with them inside a shape-coded sentence. */
+  --color-past: #6d4bb8;
+  --color-past-wash: #efeafb;
+  --color-present: #1a6e3a;
+  --color-present-wash: #e7f3ea;
+  --color-future: #9a5b06;
+  --color-future-wash: #faf0e2;
+  --color-wrong: #a8321f;
+  --color-wrong-wash: #fbeae7;
+  --color-line: #dbe3ec;
+
+  /* Shape Coding, taken from the sentence artwork in "A Boy". The word colours keep
+     the artwork's hues but are darkened to clear 4.5:1 on the grey fill — the
+     originals measured 3.16, 3.80 and 2.01. */
+  --color-shape: #c8d1d9;
+  --color-shape-line: #000000;
+  --color-role-article: #932595;
+  --color-role-noun: #b01217;
+  --color-role-verb: #2213ca;
+
+  /* Type scale */
+  --font-display: 'Mukta', system-ui, sans-serif;
+  --font-body: 'Mukta', system-ui, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.333rem;
+  --step-2: 1.777rem;
+  --step-3: 2.369rem;
+  --step-4: 3.157rem;
+
+  /* Spacing — 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  --radius: 10px;
+  --radius-pill: 999px;
+  --stroke: 2px;
+  --measure: 62ch;
+  --shell: 76rem;
+  --scene: 18rem;
+  /* Proportions from the artwork's shape outlines: oval 382x208, diamond 237x205,
+     hexagon 327x199. All one height, width varying by aspect. */
+  --shape-h: 4.8rem;
+  --shape-oval-w: 8.8rem;
+  --shape-diamond-w: 5.6rem;
+  --shape-hex-w: 7.9rem;
+  --pictogram: 3.6rem;
+  --video: 17rem;
+  --logo: 2.75rem;
+
+  --shadow-panel: 0 1px 2px rgb(14 38 84 / 6%), 0 12px 32px -12px rgb(14 38 84 / 20%);
+}

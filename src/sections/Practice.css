@@ -1,0 +1,381 @@
+.practice__inner {
+  align-items: start;
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+}
+
+.practice__intro {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.practice__scene {
+  width: var(--scene);
+}
+
+/* The panel borrows the hero lesson panel's bar-plus-body shape, so the two things
+   on the page that show the product read as the same product. */
+.quiz {
+  background-color: var(--color-raised);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.quiz__bar {
+  align-items: center;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Each question wears its own tense colour, the same chip the hero slides use. */
+.quiz__tense {
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding-inline: var(--space-3);
+  text-transform: uppercase;
+}
+
+.quiz__tense--past {
+  background-color: var(--color-past-wash);
+  color: var(--color-past);
+}
+
+.quiz__tense--present {
+  background-color: var(--color-present-wash);
+  color: var(--color-present);
+}
+
+.quiz__tense--future {
+  background-color: var(--color-future-wash);
+  color: var(--color-future);
+}
+
+.quiz__count {
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+}
+
+.quiz__body {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  padding: var(--space-4);
+  position: relative;
+}
+
+/* No font-size here: the shapes are fixed sizes and the words are scaled to fit
+   inside them by CodedSentence. */
+.quiz__prompt {
+  margin-block: var(--space-2);
+}
+
+/* The blank is the drop target, sitting inside the diamond where the verb belongs. */
+.quiz__slot {
+  border-bottom: var(--stroke) dashed currentColor;
+  display: inline-block;
+  min-width: 2.4em;
+  text-align: center;
+  transition: background-color 140ms ease;
+}
+
+.quiz__slot--filled {
+  border-bottom-color: transparent;
+}
+
+.quiz__slot--armed {
+  background-color: var(--color-raised);
+  border-bottom-style: solid;
+}
+
+.quiz__slot--over {
+  background-color: var(--color-past-wash);
+  border-bottom-style: solid;
+}
+
+/* Directly under the sentence, so the drag is short and the blank it belongs to is
+   the nearest thing on screen. */
+.quiz__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  position: relative;
+}
+
+.quiz__option {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: var(--step-2);
+  padding: var(--space-2) var(--space-4);
+  transition: border-color 140ms ease;
+}
+
+.quiz__option:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.quiz__option:active {
+  cursor: grabbing;
+}
+
+.quiz__option--correct {
+  background-color: var(--color-accent-wash);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.quiz__option--wrong {
+  background-color: var(--color-wrong-wash);
+  border-color: var(--color-wrong);
+  color: var(--color-wrong);
+}
+
+.quiz__feedback {
+  border-top: 1px solid var(--color-line);
+  min-height: var(--space-6);
+  padding-top: var(--space-4);
+}
+
+.quiz__verdict {
+  align-items: center;
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: auto 1fr;
+}
+
+.quiz__verdict-copy {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+}
+
+.quiz__sign {
+  width: var(--space-7);
+}
+
+/* Anchors the burst so the confetti radiates from the tick itself. */
+.quiz__burst {
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+/* Accent rather than green: green already means present tense on this page. */
+.quiz__tick {
+  color: var(--color-accent);
+  height: auto;
+  width: var(--space-6);
+}
+
+.quiz__label {
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding-inline: var(--space-3);
+  text-transform: uppercase;
+}
+
+.quiz__label--correct {
+  background-color: var(--color-accent-wash);
+  color: var(--color-accent);
+}
+
+.quiz__label--wrong {
+  background-color: var(--color-wrong-wash);
+  color: var(--color-wrong);
+}
+
+.quiz__feedback-text {
+  color: var(--color-ink-soft);
+}
+
+.quiz__next {
+  background: none;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  color: var(--color-accent);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-3);
+  transition: background-color 140ms ease;
+}
+
+.quiz__next:hover {
+  background-color: var(--color-accent-wash);
+}
+
+/* The key sits with the shapes it explains, at the foot of the panel that uses them,
+   folded away until asked for. */
+.quiz__key {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-line);
+  padding: var(--space-3) var(--space-4);
+}
+
+.quiz__key-toggle {
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quiz__key-toggle:hover {
+  color: var(--color-ink);
+}
+
+.quiz__key-list {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-4) 0 var(--space-2);
+}
+
+.quiz__key-item {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--step--1);
+  gap: var(--space-2) var(--space-3);
+}
+
+/* Key samples are miniatures of the real shapes, not separate icons. */
+.quiz__key-item .coded__shape {
+  font-size: var(--step--1);
+  height: calc(var(--shape-h) / 1.7);
+}
+
+.quiz__key-item .coded__shape--oval {
+  width: calc(var(--shape-oval-w) / 1.7);
+}
+
+.quiz__key-item .coded__shape--diamond {
+  width: calc(var(--shape-diamond-w) / 1.7);
+}
+
+.quiz__key-item .coded__shape--hexagon {
+  width: calc(var(--shape-hex-w) / 1.7);
+}
+
+.quiz__key-meaning {
+  color: var(--color-ink-soft);
+}
+
+/* A short demonstration of the gesture, anchored to the options row itself rather
+   than to the panel, so it stays aimed at the sentence even if the panel reflows. */
+.quiz__demo {
+  align-items: center;
+  display: none;
+  gap: var(--space-1);
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+
+.quiz__demo-chip {
+  background-color: var(--color-past-wash);
+  border-radius: var(--radius);
+  color: var(--color-past);
+  font-weight: 700;
+  padding-inline: var(--space-2);
+}
+
+.quiz__demo-cursor {
+  color: var(--color-ink);
+  display: flex;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .quiz__demo {
+    animation: quiz-demo-carry 4600ms cubic-bezier(0.4, 0, 0.3, 1) infinite;
+    display: flex;
+  }
+
+  .quiz__demo-chip {
+    animation: quiz-demo-chip 4600ms linear infinite;
+  }
+
+  .quiz__demo-cursor {
+    animation: quiz-demo-cursor 4600ms linear infinite;
+  }
+}
+
+@keyframes quiz-demo-carry {
+  0%,
+  24% {
+    transform: translate(var(--space-2), var(--space-2));
+  }
+
+  62%,
+  100% {
+    transform: translate(var(--space-4), calc(var(--space-5) * -1));
+  }
+}
+
+@keyframes quiz-demo-chip {
+  0%,
+  18% {
+    opacity: 0;
+  }
+
+  24%,
+  72% {
+    opacity: 1;
+  }
+
+  82%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes quiz-demo-cursor {
+  0% {
+    opacity: 0;
+  }
+
+  12%,
+  84% {
+    opacity: 1;
+  }
+
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 64rem) {
+  .practice__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .practice__scene {
+    display: none;
+  }
+
+  .quiz__prompt {
+    font-size: var(--step-1);
+  }
+}

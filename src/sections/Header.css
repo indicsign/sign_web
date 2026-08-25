@@ -1,0 +1,57 @@
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.site-header__inner {
+  align-items: center;
+  display: flex;
+  gap: var(--space-5);
+  justify-content: space-between;
+  padding-block: var(--space-3);
+}
+
+.site-header__brand {
+  display: flex;
+}
+
+/* Intrinsic width/height stay on the tag so the row reserves its space before the
+   file arrives; the height token is what actually sizes it. */
+.site-header__logo {
+  height: var(--logo);
+  width: auto;
+}
+
+.site-header__nav {
+  align-items: center;
+  display: flex;
+  gap: var(--space-5);
+}
+
+.site-header__link {
+  color: var(--color-ink-soft);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.site-header__link:hover {
+  color: var(--color-ink);
+  text-decoration: underline;
+}
+
+@media (max-width: 48rem) {
+  .site-header {
+    position: static;
+  }
+
+  .site-header__nav {
+    gap: var(--space-3);
+  }
+
+  .site-header__link {
+    display: none;
+  }
+}

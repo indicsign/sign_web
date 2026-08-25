@@ -1,0 +1,73 @@
+/* Per-piece inputs, set inline on each element rather than in the token file — they
+   are inputs to this animation, not design tokens. Typing them lets the browser
+   interpolate them properly instead of treating them as strings. */
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --dist {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --spin {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --delay {
+  syntax: '<time>';
+  inherits: false;
+  initial-value: 0ms;
+}
+
+.confetti {
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  position: absolute;
+}
+
+.confetti__bit {
+  border-radius: 1px;
+  height: 0.3rem;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 0.5rem;
+}
+
+/* A burst, not a loop: each piece is rotated to its heading, thrown outward along it,
+   and spun on the way. */
+@media (prefers-reduced-motion: no-preference) {
+  .confetti__bit {
+    animation: confetti-fly 900ms cubic-bezier(0.15, 0.75, 0.3, 1) var(--delay) backwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
+
+@keyframes confetti-fly {
+  from {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateY(0) rotate(0deg) scale(0.6);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateY(calc(var(--dist) * -1)) rotate(var(--spin))
+      scale(1);
+  }
+}
