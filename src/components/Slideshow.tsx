@@ -35,6 +35,10 @@ export function Slideshow() {
   // Bumped every time the dwell timer restarts, and used as the progress bar's key,
   // so the bar and the clock it reports on can never drift apart.
   const [tick, setTick] = useState(0)
+  // Autoplay is only permitted while muted, so the clips start silent and the reader
+  // turns sound on. The signing carries the lesson, but the audio track is real
+  // stereo narration, so it has to be reachable.
+  const [sound, setSound] = useState(false)
   // Which clips may fetch. A slide's clip starts loading one slide early, so the
   // next one is buffered before it is shown without the page opening on three
   // videos at once.
@@ -89,13 +93,22 @@ export function Slideshow() {
       if (i !== index) {
         video.pause()
         video.currentTime = 0
+        video.muted = true
         return
       }
 
+      video.muted = !sound
+
       if (reduce || stopped) video.pause()
-      else void video.play().catch(() => undefined)
+      else
+        void video.play().catch(() => {
+          // An unmuted autoplay can still be refused. Fall back to silent playback
+          // rather than leaving the clip stalled on a dead frame.
+          video.muted = true
+          setSound(false)
+        })
     })
-  }, [index, reduce, stopped])
+  }, [index, reduce, sound, stopped])
 
   // Only a keyboard visit holds the slides. A mouse click leaves focus sitting on
   // the button it hit, which would otherwise hold them for the rest of the visit.
@@ -209,7 +222,49 @@ export function Slideshow() {
       </div>
 
       <div className="slides__nav">
-        <span />
+        {reduce ? (
+          /* Reduced motion already renders the native controls, which carry their own
+             volume, so a second one would only duplicate it. */
+          <span />
+        ) : (
+          <button
+            aria-label={sound ? slides.sound.on : slides.sound.off}
+            aria-pressed={sound}
+            className="slides__step"
+            onClick={() => setSound((on) => !on)}
+            type="button"
+          >
+            <svg aria-hidden="true" focusable="false" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor" />
+              {sound ? (
+                <>
+                  <path
+                    d="M15.5 9.2a4 4 0 0 1 0 5.6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M18.2 6.6a7.6 7.6 0 0 1 0 10.8"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                  />
+                </>
+              ) : (
+                <path
+                  d="M15.8 9.8l4.4 4.4m0-4.4l-4.4 4.4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                />
+              )}
+            </svg>
+          </button>
+        )}
 
         <div className="slides__transport">
           <button
