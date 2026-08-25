@@ -22,11 +22,12 @@ exists.
 Capermint), the syllabus comparison report, or the tense-unit content work.
 Don't scaffold those here.
 
-**Deploy target:** `https://gamepeg.com/full/indicai/` — the page ships into this
-existing site, so it must not look like a separate product. Match the surrounding
-site's palette, type, and header/footer before inventing anything new. Because the
-page is served from a subpath, set `base: '/full/indicai/'` in `vite.config.ts` and
-use relative asset paths, or every build will 404 on CSS and images.
+**Deploy target:** `https://sign.anyserver.site` — served at the domain root from
+the nginx image in `Dockerfile`, deployed on Railway. The page should still read as
+part of the Indic AI site rather than a separate product, so match that palette,
+type, and header/footer before inventing anything new. `base: './'` in
+`vite.config.ts` keeps asset URLs relative, which is what makes the same build work
+at the root and under a subpath; don't hardcode a path prefix.
 
 > TODO for the team — confirm and replace: exact product name, logo/brand assets,
 > the URL the primary CTA points to (where the web app actually opens), whether the

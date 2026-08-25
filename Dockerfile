@@ -1,6 +1,6 @@
-# Builds the static page and serves it from the same subpath it deploys to
-# (https://gamepeg.com/full/indicai/). Serving it at the container root would
-# 404 every asset, because `vite build` bakes that prefix into the URLs.
+# Builds the static page and serves it from the document root
+# (https://sign.anyserver.site). `vite build` emits relative asset URLs, so the
+# same image would also serve correctly from a subpath.
 
 FROM node:22-alpine AS build
 WORKDIR /app
@@ -16,5 +16,5 @@ FROM nginx:1.27-alpine
 COPY nginx.conf /etc/nginx/templates/default.conf.template
 # Overridden by the platform wherever the platform assigns the port.
 ENV PORT=80
-COPY --from=build /app/dist /usr/share/nginx/html/full/indicai
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
