@@ -26,7 +26,7 @@
 
 /* The tense label wears the tense's own colour, so the slideshow teaches the same
    colour language the shape-coded sentences use. */
-.slides__tense {
+.slides__stage {
   border-radius: var(--radius-pill);
   font-family: var(--font-display);
   font-size: var(--step--1);
@@ -34,21 +34,6 @@
   letter-spacing: 0.06em;
   padding-inline: var(--space-3);
   text-transform: uppercase;
-}
-
-.slides__tense--past {
-  background-color: var(--color-past-wash);
-  color: var(--color-past);
-}
-
-.slides__tense--present {
-  background-color: var(--color-present-wash);
-  color: var(--color-present);
-}
-
-.slides__tense--future {
-  background-color: var(--color-future-wash);
-  color: var(--color-future);
 }
 
 .slides__count {

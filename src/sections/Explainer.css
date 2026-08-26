@@ -1,0 +1,102 @@
+/* One size for both levels. Sizing each to its own native width made the block jump
+   when switching. Both files are within a hair of 2.22:1, and 56rem sits between
+   them — the 1280 file downscales slightly, the 816 file upscales slightly. */
+.explainer__levels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.explainer__level {
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-4);
+  transition: border-color 140ms ease, background-color 140ms ease, color 140ms ease;
+}
+
+.explainer__level:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.explainer__level--on {
+  background-color: var(--color-accent-wash);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.explainer__level--on .explainer__frame {
+  aspect-ratio: 20 / 9;
+  background-color: var(--color-ink);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  max-width: 56rem;
+  overflow: hidden;
+}
+
+.explainer__video {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+/* The still sits behind the button, dimmed just enough for the label to hold up. */
+.explainer__poster {
+  align-items: center;
+  position: relative;
+  background-color: var(--color-ink);
+  background-position: center;
+  background-size: cover;
+  border: none;
+  color: var(--color-raised);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.explainer__poster::before {
+  background-color: rgb(14 38 84 / 45%);
+  content: '';
+  inset: 0;
+  position: absolute;
+  transition: background-color 140ms ease;
+}
+
+.explainer__poster:hover::before {
+  background-color: rgb(14 38 84 / 30%);
+}
+
+.explainer__play {
+  align-items: center;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  display: flex;
+  height: var(--space-6);
+  justify-content: center;
+  padding-left: var(--space-1);
+  transition: background-color 140ms ease;
+  width: var(--space-6);
+}
+
+.explainer__poster:hover .explainer__play {
+  background-color: var(--color-accent-strong);
+}
+
+.explainer__play,
+.explainer__play-label {
+  position: relative;
+}
+
+.explainer__play-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgb(14 38 84 / 70%);
+}

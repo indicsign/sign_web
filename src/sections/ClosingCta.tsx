@@ -1,13 +1,16 @@
 import { Button } from '../components/Button'
 import { LottieScene } from '../components/LottieScene'
 import { APP_URL, CTA_LABEL, closing } from '../content'
+import { useReveal } from '../reveal'
 import sceneUrl from '../assets/lottie/help-sign.json?url'
 import './ClosingCta.css'
 
 export function ClosingCta() {
+  const reveal = useReveal<HTMLDivElement>()
+
   return (
     <section aria-labelledby="closing-heading" className="section closing">
-      <div className="shell closing__inner">
+      <div className={`shell closing__inner ${reveal.className}`} ref={reveal.ref}>
         <div className="closing__copy">
           <h2 className="closing__title" id="closing-heading">
             {closing.heading}

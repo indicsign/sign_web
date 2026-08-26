@@ -2,31 +2,31 @@
 // login first. Every CTA on the page points here.
 export const APP_URL = 'https://gamepeg.com/full/indicai/app/'
 
-export const BRAND = 'Indic AI'
+export const BRAND = 'Indic Sign'
+export const PRODUCT = 'Indic AI Sign'
 export const LOGO_ALT = 'Indic AI — Foundation for social good'
 
-export const CTA_LABEL = 'Open the web'
+export const CTA_LABEL = 'Start learning today'
 
 export const nav = {
   skipToContent: 'Skip to content',
-  units: 'What you learn',
+  journey: 'The journey',
   words: 'The words',
   practice: 'How practice works',
 } as const
 
 export const hero = {
-  eyebrow: 'English grammar in Indian Sign Language',
-  title: 'Learn one tense at a time, until it stops being guesswork.',
+  title: 'Empowering deaf students with English',
   body:
-    'Eight units on the English past, present and future tense, signed in Indian Sign Language and shape-coded on screen, so the grammar is something you can see rather than something you have to be told. Each unit is a short lesson, then practice on the same sentence you just read.',
-  ctaNote: 'Works in your browser. Nothing to install.',
+    'A visual learning app that combines Indian Sign Language, lip movements and AI-generated, real-world video. English syntax stops being a phonetic rule you cannot hear and becomes a shape you can see.',
+  ctaNote: 'Made for classrooms and for home.',
 } as const
 
 // Shape Coding, matched to the sentence artwork in "A Boy": an oval holds who or what,
 // with its pictogram standing on it; a diamond holds the verb. Word colour marks the
 // part of speech — article, noun, verb — the way the artwork underlines them.
-export type Tense = 'past' | 'present' | 'future'
-export type Shape = 'oval' | 'diamond' | 'hexagon'
+export type Shape = 'oval' | 'diamond' | 'hexagon' | 'semicircle'
+export type Slot = 'who' | 'what' | 'where'
 export type Role = 'article' | 'noun' | 'verb'
 
 export type Word = {
@@ -39,37 +39,30 @@ export type CodedToken = {
   text: string
   words?: readonly Word[]
   shape?: Shape
+  /** Which question the container answers. Drives the shape's fill. */
+  slot?: Slot
   picture?: 'boy' | 'apple'
 }
 
 export const shapeKey = {
   heading: 'How to read the shapes',
   items: [
-    {
-      shape: 'oval' as Shape,
-      label: 'A boy',
-      meaning: 'an oval is who or what — the picture with its words underneath',
-    },
-    {
-      shape: 'diamond' as Shape,
-      label: 'ate',
-      meaning: 'a diamond is the word carrying the tense — ate, is, will',
-    },
-    {
-      shape: 'hexagon' as Shape,
-      label: 'eating',
-      meaning: 'a hexagon is the verb that follows it — eating, eat',
-    },
+    { shape: 'oval' as Shape, slot: 'who' as Slot, label: 'A boy', meaning: 'who the sentence is about' },
+    { shape: 'diamond' as Shape, label: 'eats', meaning: 'the word carrying the tense' },
+    { shape: 'hexagon' as Shape, label: 'eating', meaning: 'the verb that follows it' },
+    { shape: 'oval' as Shape, slot: 'what' as Slot, label: 'an apple', meaning: 'what it is done to' },
   ],
 } as const
 
 export type Slide = {
   id: 'past' | 'present' | 'future'
-  tense: Tense
-  tenseLabel: string
+  stage: string
   sentence: string
 }
 
+// TODO(team): these three clips are the old tense set, kept because they are the only
+// signed sentences we have. Replace with Aashna's Unit 3 reference videos — the ids
+// map to the files in src/assets/video and src/assets/sentences.
 export const slides = {
   nav: {
     pick: 'Show',
@@ -83,296 +76,297 @@ export const slides = {
   // No longer shown on the page — it is the video's accessible name only.
   videoLabel: 'The same sentence in Indian Sign Language',
   items: [
-    {
-      id: 'past',
-      tense: 'past',
-      tenseLabel: 'Past',
-      sentence: 'A boy ate an apple',
-    },
-    {
-      id: 'present',
-      tense: 'present',
-      tenseLabel: 'Present continuous',
-      sentence: 'A boy is eating an apple',
-    },
-    {
-      id: 'future',
-      tense: 'future',
-      tenseLabel: 'Future',
-      sentence: 'A boy will eat an apple',
-    },
+    { id: 'past', stage: 'Sentences', sentence: 'A boy ate an apple' },
+    { id: 'present', stage: 'Sentences', sentence: 'A boy is eating an apple' },
+    { id: 'future', stage: 'Sentences', sentence: 'A boy will eat an apple' },
   ] satisfies readonly Slide[],
 } as const
 
-export type Unit = {
+export type Stage = {
   n: number
   title: string
-  tense: Tense
-  lessons: number
-  covers: string
+  line: string
+  detail: string
 }
 
-export const tenseLabels: Record<Tense, string> = {
-  past: 'Past',
-  present: 'Present',
-  future: 'Future',
-}
-
-export const units = {
-  heading: 'Eight units on past, present and future tense',
+export const journey = {
+  heading: 'A complete English journey',
   body:
-    'Each unit takes one tense and stays there until it is finished. The shapes do not change between units, so a sentence you meet in unit eight is marked up the way unit one taught you to read it.',
+    'Four stages, each building on the one before it. A student moves from single words to whole stories without ever being asked to hear a sound.',
   items: [
     {
       n: 1,
-      title: 'Past simple',
-      tense: 'past',
-      lessons: 6,
-      covers: 'The past diamond, regular and irregular forms, and where the tense belongs',
+      title: 'Words',
+      line: 'Mastering daily vocabulary.',
+      detail: 'Everyday words, each one signed and shown before it is ever read in a sentence.',
     },
     {
       n: 2,
-      title: 'Past continuous',
-      tense: 'past',
-      lessons: 5,
-      covers: 'was and were with -ing, for the action that was already under way',
+      title: 'Sentences',
+      line: 'Connecting ideas logically.',
+      detail: 'Shape-coded sentence building, so word order becomes a pattern the eye can recognise.',
     },
     {
       n: 3,
-      title: 'Past perfect',
-      tense: 'past',
-      lessons: 4,
-      covers: 'had with the past participle, when one past thing happened before another',
+      title: 'Paragraphs',
+      line: 'Structuring larger thoughts.',
+      detail: 'Sentences joined into a paragraph that holds one idea from beginning to end.',
     },
     {
       n: 4,
-      title: 'Present simple',
-      tense: 'present',
-      lessons: 6,
-      covers: 'The present diamond, and why he goes takes an s when they go does not',
+      title: 'Stories',
+      line: 'Immersive reading & expression.',
+      detail: 'Reading for meaning, and writing back — the point everything else has been building towards.',
+    },
+  ] satisfies readonly Stage[],
+} as const
+
+export type Flow = {
+  id: string
+  title: string
+  steps: readonly string[]
+}
+
+export type Principle = {
+  id: string
+  title: string
+  body: string
+  /** Which mechanic to demonstrate above the words. */
+  demo: 'shapes' | 'tokens' | 'legend'
+}
+
+// Two of these ideas are sequences and three are properties. Shown as five identical
+// cards they all read as the same kind of thing, which is what made the section flat.
+export const features = {
+  heading: 'How the visual grammar framework works',
+  body:
+    'English is usually taught through phonetic rules that do not translate visually. Indic Sign steps away from abstract drills and maps sentence structure onto shapes and colours instead — seeing is understanding.',
+  flows: [
+    {
+      id: 'lesson',
+      title: 'Inside one lesson',
+      steps: [
+        'Five seconds of real-world video, so the sentence has a situation before it has words.',
+        'An animated ISL translation of that same sentence.',
+        'A lip-reading clip, held close on the mouth.',
+      ],
     },
     {
-      n: 5,
-      title: 'Present continuous',
-      tense: 'present',
-      lessons: 5,
-      covers: 'am, is and are with -ing, for what is happening as you sign it',
+      id: 'quiz',
+      title: 'How the quizzes climb',
+      steps: [
+        'Pick out the correct structure.',
+        'Assemble a sentence from scrambled words.',
+        'Supply the missing word with nothing to choose from.',
+      ],
+    },
+  ] satisfies readonly Flow[],
+  principles: [
+    {
+      id: 'shapes',
+      demo: 'shapes',
+      title: 'Shape-coded building',
+      body: 'Words sit inside grammatical containers, so syntax is recognised by sight rather than by rule.',
     },
     {
-      n: 6,
-      title: 'Present perfect',
-      tense: 'present',
-      lessons: 4,
-      covers: 'have and has with the past participle, for what started before now and still holds',
+      id: 'anti-guessing',
+      demo: 'tokens',
+      title: 'Nothing to guess from',
+      body: 'Every token and drop zone is one width, so no answer can be read off the length of a word.',
     },
     {
-      n: 7,
-      title: 'Future with will',
-      tense: 'future',
-      lessons: 5,
-      covers: 'The future diamond, and the contractions people actually sign and write',
+      id: 'legend',
+      demo: 'legend',
+      title: 'The legend, on demand',
+      body: 'The shape and colour rules stay one click away, without leaving the lesson.',
     },
-    {
-      n: 8,
-      title: 'Future with going to',
-      tense: 'future',
-      lessons: 4,
-      covers: 'The difference between a plan you have made and a prediction you are making',
-    },
-  ] satisfies readonly Unit[],
+  ] satisfies readonly Principle[],
+} as const
+
+export type Level = {
+  id: 'beginner' | 'difficult'
+  label: string
+  /** Native pixel size. The frame never renders larger than this — upscaling a screen
+      recording smears the app's own text, and shrinking it makes that text unreadable,
+      so 1:1 is the target. */
+  width: number
+  height: number
+  /** Seconds to stop at, when the file runs past the part worth showing. */
+  cutoff?: number
+}
+
+export const explainer = {
+  heading: 'Watch a lesson',
+  body: 'A full walkthrough of the app, from the first word to a finished sentence. Take the level that matches the class.',
+  play: 'Play the walkthrough',
+  levelLabel: 'Choose a level',
+  levels: [
+    { id: 'beginner', label: 'Beginner', width: 1280, height: 576 },
+    // The file runs to 2:37, but the last nine seconds are not part of the walkthrough.
+    { id: 'difficult', label: 'Difficult', width: 816, height: 368, cutoff: 148 },
+  ] satisfies readonly Level[],
 } as const
 
 export type VocabWord = {
   word: string
-  kind: 'verb' | 'noun' | 'adverb'
-  past?: string
+  kind: 'noun' | 'verb' | 'adjective'
   gloss: string
+  /** Set where an ISL clip for the word exists. */
+  sign?: 'water'
 }
 
 export const vocabulary = {
-  heading: 'Every unit brings its own words',
+  heading: 'Everyday words, signed first',
   body:
-    'A unit only builds sentences from words it has already taught, and each word is signed on its own before it turns up inside one. For the past simple that means the irregular forms, because those are the part you cannot work out from a rule.',
-  unitLabel: 'Words in unit 1',
-  pastLabel: 'past',
+    'A word is signed on its own before it ever turns up inside a sentence. These come from the first stage of the journey, so a student meets them long before they have to read them in context.',
+  label: 'Words in stage one',
   items: [
-    {
-      word: 'go',
-      kind: 'verb',
-      past: 'went',
-      gloss: 'to move from where you are to somewhere else',
-    },
-    {
-      word: 'eat',
-      kind: 'verb',
-      past: 'ate',
-      gloss: 'to take food into your mouth',
-    },
-    {
-      word: 'write',
-      kind: 'verb',
-      past: 'wrote',
-      gloss: 'to put words on paper or on a screen',
-    },
-    {
-      word: 'buy',
-      kind: 'verb',
-      past: 'bought',
-      gloss: 'to get something by paying for it',
-    },
-    {
-      word: 'read',
-      kind: 'verb',
-      past: 'read',
-      gloss: 'to look at words and understand them — spelt the same in the past',
-    },
-    {
-      word: 'teach',
-      kind: 'verb',
-      past: 'taught',
-      gloss: 'to help someone learn something',
-    },
-    {
-      word: 'school',
-      kind: 'noun',
-      gloss: 'the place you go to learn',
-    },
-    {
-      word: 'yesterday',
-      kind: 'adverb',
-      gloss: 'the day before today',
-    },
+    { word: 'water', kind: 'noun', gloss: 'the clear drink that comes from a tap or a well', sign: 'water' },
+    { word: 'school', kind: 'noun', gloss: 'the place you go to learn' },
+    { word: 'mother', kind: 'noun', gloss: 'the woman who is your parent' },
+    { word: 'book', kind: 'noun', gloss: 'pages joined together that you read' },
+    { word: 'house', kind: 'noun', gloss: 'the building you live in' },
+    { word: 'friend', kind: 'noun', gloss: 'someone you like and choose to be with' },
+    { word: 'eat', kind: 'verb', gloss: 'to take food into your mouth' },
+    { word: 'happy', kind: 'adjective', gloss: 'the way you feel when something is good' },
   ] satisfies readonly VocabWord[],
 } as const
 
-export type PracticeOption = {
+export type BuildToken = {
   id: string
   label: string
-  correct: boolean
-  feedback: string
+  words: readonly Word[]
+  /** Said when the token is dropped somewhere it does not belong. */
+  belongs: string
 }
 
-export type Question = {
-  id: Slide['id']
-  tense: Tense
-  tenseLabel: string
-  prompt: readonly CodedToken[]
-  options: readonly PracticeOption[]
+export type BuildSlot = {
+  id: string
+  shape: Shape
+  slot?: Slot
+  picture?: 'boy' | 'apple'
 }
 
+export type BuildRound = {
+  id: 'past' | 'present' | 'future'
+  label: string
+  sentence: string
+  slots: readonly BuildSlot[]
+  tokens: readonly BuildToken[]
+}
+
+const WHO: BuildToken = {
+  id: 'who',
+  label: 'A boy',
+  words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }],
+  belongs: 'A boy is who the sentence is about. That is the red oval at the front.',
+}
+
+const WHAT: BuildToken = {
+  id: 'what',
+  label: 'an apple',
+  words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }],
+  belongs: 'an apple is what gets eaten. It goes in the white oval at the end.',
+}
+
+// An empty shape shows nothing but its own outline and fill. The colour and the form
+// are the only clues, which is the whole skill being trained — the word and its
+// picture appear only once the shape has been filled correctly.
 export const practice = {
-  heading: 'Practice on the sentences you just read',
+  heading: 'Build the sentence',
   body:
-    'The same boy and the same apple, once per tense. The shapes stay on screen while you answer, and a wrong form is told which rule it broke rather than just marked red.',
-  blank: '___',
-  next: 'Next question',
+    'The same boy and the same apple, once for each tense. Every token is the same width, so nothing can be worked out from the length of a word — the shape and its colour are the only clues, and they are the ones worth learning.',
+  tray: 'Drag each word into the shape it belongs in, or press a word and then press a shape.',
+  tag: 'Quiz practice',
+  wrongLabel: 'Not there',
+  doneLabel: 'Correct',
   restart: 'Start again',
-  verdict: { correct: 'Correct', wrong: 'Wrong' },
-  questions: [
+  next: 'Next tense',
+  // Names the container for a screen reader without naming the role it wants — the
+  // shape is on screen either way, the answer is not.
+  shapeNames: { oval: 'oval', diamond: 'diamond', hexagon: 'hexagon', semicircle: 'semi-circle' },
+  emptyLabel: 'Empty',
+  rounds: [
     {
       id: 'past',
-      tense: 'past',
-      tenseLabel: 'Past',
-      prompt: [
-      { text: 'A boy', shape: 'oval', picture: 'boy',
-        words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }] },
-      { text: '___', shape: 'diamond', words: [{ text: '___', role: 'verb' }] },
-      { text: 'an apple', shape: 'oval', picture: 'apple',
-        words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }] },
+      label: 'Past',
+      sentence: 'A boy ate an apple',
+      slots: [
+        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
+        { id: 'tensed', shape: 'diamond' },
+        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
       ],
-      options: [
+      tokens: [
+        WHAT,
         {
-          id: 'ate',
+          id: 'tensed',
           label: 'ate',
-          correct: true,
-          feedback: 'Right. Nothing else carries the tense, so the diamond has to — ate.',
+          words: [{ text: 'ate', role: 'verb' }],
+          belongs: 'ate carries the tense on its own, so it belongs in the diamond.',
         },
-        {
-          id: 'eat',
-          label: 'eat',
-          correct: false,
-          feedback: 'eat is the base form. It needs a word like will in front of it before it can hold a tense.',
-        },
-        {
-          id: 'eaten',
-          label: 'eaten',
-          correct: false,
-          feedback: 'eaten needs has or had in front of it. Standing alone in the diamond, use ate.',
-        },
+        WHO,
       ],
     },
     {
       id: 'present',
-      tense: 'present',
-      tenseLabel: 'Present continuous',
-      prompt: [
-      { text: 'A boy', shape: 'oval', picture: 'boy',
-        words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }] },
-      { text: 'is', shape: 'diamond', words: [{ text: 'is', role: 'verb' }] },
-      { text: '___', shape: 'hexagon', words: [{ text: '___', role: 'verb' }] },
-      { text: 'an apple', shape: 'oval', picture: 'apple',
-        words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }] },
+      label: 'Present',
+      sentence: 'A boy is eating an apple',
+      slots: [
+        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
+        { id: 'tensed', shape: 'diamond' },
+        { id: 'verb', shape: 'hexagon' },
+        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
       ],
-      options: [
+      tokens: [
         {
-          id: 'eating',
+          id: 'verb',
           label: 'eating',
-          correct: true,
-          feedback: 'Right. is holds the tense in the diamond, so the hexagon takes eating.',
+          words: [{ text: 'eating', role: 'verb' }],
+          belongs: 'eating does not hold the tense — is does. It goes in the hexagon.',
         },
+        WHO,
+        WHAT,
         {
-          id: 'eat',
-          label: 'eat',
-          correct: false,
-          feedback: 'is eat is not English. After the diamond holding is, the hexagon takes -ing: eating.',
-        },
-        {
-          id: 'ate',
-          label: 'ate',
-          correct: false,
-          feedback: 'ate is past. Following is with it would mark two different tenses in one sentence.',
+          id: 'tensed',
+          label: 'is',
+          words: [{ text: 'is', role: 'verb' }],
+          belongs: 'is is the word carrying the tense, and that always sits in the diamond.',
         },
       ],
     },
     {
       id: 'future',
-      tense: 'future',
-      tenseLabel: 'Future',
-      prompt: [
-      { text: 'A boy', shape: 'oval', picture: 'boy',
-        words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }] },
-      { text: 'will', shape: 'diamond', words: [{ text: 'will', role: 'verb' }] },
-      { text: '___', shape: 'hexagon', words: [{ text: '___', role: 'verb' }] },
-      { text: 'an apple', shape: 'oval', picture: 'apple',
-        words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }] },
+      label: 'Future',
+      sentence: 'A boy will eat an apple',
+      slots: [
+        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
+        { id: 'tensed', shape: 'diamond' },
+        { id: 'verb', shape: 'hexagon' },
+        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
       ],
-      options: [
+      tokens: [
         {
-          id: 'eat',
+          id: 'tensed',
+          label: 'will',
+          words: [{ text: 'will', role: 'verb' }],
+          belongs: 'will is what makes it future, so it takes the diamond.',
+        },
+        WHAT,
+        {
+          id: 'verb',
           label: 'eat',
-          correct: true,
-          feedback: 'Right. will has already made it future in the diamond, so the hexagon takes the base form.',
+          words: [{ text: 'eat', role: 'verb' }],
+          belongs: 'will already holds the tense, so eat stays plain and goes in the hexagon.',
         },
-        {
-          id: 'ate',
-          label: 'ate',
-          correct: false,
-          feedback: 'ate is past. will ate puts the future and the past in the same sentence.',
-        },
-        {
-          id: 'eating',
-          label: 'eating',
-          correct: false,
-          feedback: 'will eating is not English. After the diamond holding will, the hexagon takes eat.',
-        },
+        WHO,
       ],
     },
-  ] satisfies readonly Question[],
+  ] satisfies readonly BuildRound[],
 } as const
 
 export const closing = {
-  heading: 'Start with the first unit',
-  body: 'The past simple, in six lessons. You can see whether it teaches the way you learn before you commit to anything.',
+  heading: 'Start learning today',
+  body: 'Made for classrooms and for home. It opens in a browser, so there is nothing to install and nothing to wait for.',
 } as const
 
 // TODO(team): replace with the real account URLs. These point at the platforms

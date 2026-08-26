@@ -1,0 +1,202 @@
+.features__flows {
+  display: grid;
+  gap: var(--space-5) var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.flow__title {
+  font-size: var(--step-1);
+  margin-bottom: var(--space-4);
+}
+
+/* A real ordered list, numbered by counter. The numbers alone carry the sequence —
+   a hairline rail down the gutter only rendered as a smudge. */
+.flow__steps {
+  counter-reset: step;
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-5);
+  position: relative;
+}
+
+.flow__step {
+  color: var(--color-ink-soft);
+  counter-increment: step;
+  font-size: var(--step--1);
+  max-width: var(--measure);
+  position: relative;
+}
+
+.flow__step::before {
+  align-items: center;
+  background-color: var(--color-raised);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  color: var(--color-accent);
+  content: counter(step);
+  display: flex;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  height: var(--space-4);
+  justify-content: center;
+  left: calc(var(--space-5) * -1);
+  position: absolute;
+  top: -0.1em;
+  width: var(--space-4);
+}
+
+/* Each principle opens with the mechanic it describes, at reduced scale. */
+.demo {
+  align-items: flex-end;
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  min-height: calc(var(--shape-h) * 0.62);
+}
+
+.demo--shapes .coded__shape {
+  font-size: var(--step--1);
+  height: calc(var(--shape-h) * 0.62);
+}
+
+.demo--shapes .coded__shape--oval {
+  width: calc(var(--shape-oval-w) * 0.62);
+}
+
+.demo--shapes .coded__shape--diamond {
+  width: calc(var(--shape-diamond-w) * 0.62);
+}
+
+/* Three words of very different length, all one width — the point made rather than
+   stated. */
+.demo--tokens {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.demo__token {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  font-size: var(--step--1);
+  font-weight: 700;
+  overflow: hidden;
+  padding: var(--space-1) var(--space-2);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: calc(var(--token) * 0.62);
+}
+
+.demo--legend {
+  align-items: center;
+}
+
+.demo__chip {
+  align-items: center;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  color: var(--color-ink-soft);
+  display: flex;
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  gap: var(--space-2);
+  letter-spacing: 0.04em;
+  padding: var(--space-2) var(--space-3);
+  text-transform: uppercase;
+}
+
+/* Sized in em, so the triangle scales with the chip's own text rather than sitting at
+   a 2px stroke width nobody can see. */
+.demo__chevron {
+  border-bottom: 0.3em solid transparent;
+  border-left: 0.42em solid currentColor;
+  border-top: 0.3em solid transparent;
+  height: 0;
+  width: 0;
+}
+
+/* Lighter than the sequences above: statements, not steps. */
+.features__principles {
+  border-top: 1px solid var(--color-line);
+  display: grid;
+  gap: var(--space-4) var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  list-style: none;
+  margin: var(--space-6) 0 0;
+  padding: var(--space-5) 0 0;
+}
+
+.principle__title {
+  font-size: var(--step-0);
+  margin-bottom: var(--space-2);
+}
+
+.principle__body {
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+}
+
+/* The three arrive in sequence, then each demo settles a beat later. Additive only:
+   with no reveal class there is no animation and everything sits in place. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal--in .principle {
+    animation: principle-in 460ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+
+  .reveal--in .principle:nth-child(2) {
+    animation-delay: 110ms;
+  }
+
+  .reveal--in .principle:nth-child(3) {
+    animation-delay: 220ms;
+  }
+
+  .reveal--in .demo--shapes .coded__shape,
+  .reveal--in .demo__token,
+  .reveal--in .demo__chip {
+    animation: demo-settle 380ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  }
+
+  .reveal--in .demo--shapes .coded__shape:nth-child(1) {
+    animation-delay: 200ms;
+  }
+
+  .reveal--in .demo--shapes .coded__shape:nth-child(2) {
+    animation-delay: 300ms;
+  }
+
+  .reveal--in .demo__token:nth-child(1) {
+    animation-delay: 310ms;
+  }
+
+  .reveal--in .demo__token:nth-child(2) {
+    animation-delay: 390ms;
+  }
+
+  .reveal--in .demo__token:nth-child(3) {
+    animation-delay: 470ms;
+  }
+
+  .reveal--in .demo__chip {
+    animation-delay: 420ms;
+  }
+
+  @keyframes principle-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--space-3));
+    }
+  }
+
+  @keyframes demo-settle {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+  }
+}
