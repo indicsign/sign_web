@@ -1,8 +1,10 @@
 import { Header } from './sections/Header'
 import { Hero } from './sections/Hero'
-import { Units } from './sections/Units'
+import { Explainer } from './sections/Explainer'
+import { Journey } from './sections/Journey'
 import { Vocabulary } from './sections/Vocabulary'
 import { Practice } from './sections/Practice'
+import { Features } from './sections/Features'
 import { ClosingCta } from './sections/ClosingCta'
 import { Footer } from './sections/Footer'
 
@@ -12,9 +14,11 @@ export default function App() {
       <Header />
       <main id="main">
         <Hero />
-        <Units />
+        <Explainer />
+        <Journey />
         <Vocabulary />
         <Practice />
+        <Features />
         <ClosingCta />
       </main>
       <Footer />

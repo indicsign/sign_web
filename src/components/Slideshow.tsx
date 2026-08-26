@@ -165,13 +165,13 @@ export function Slideshow() {
       style={{ '--dwell': `${SLIDE_MS}ms` } as CSSProperties}
     >
       <div className="slides__bar">
-        <span className={`slides__tense slides__tense--${slide.tense}`}>{slide.tenseLabel}</span>
+        <span className="slides__stage">{slide.stage}</span>
         <p className="slides__count">
           <span aria-hidden="true">
             {index + 1} / {count}
           </span>
           <span aria-live="polite" className="visually-hidden">
-            {`${index + 1} ${slides.nav.of} ${count} — ${slide.tenseLabel}: ${slide.sentence}`}
+            {`${index + 1} ${slides.nav.of} ${count} — ${slide.sentence}`}
           </span>
         </p>
       </div>
@@ -201,6 +201,7 @@ export function Slideshow() {
                     aria-label={slides.videoLabel}
                     className="slides__video"
                     controls={reduce}
+                    controlsList="nodownload"
                     disablePictureInPicture
                     height={3218}
                     loop
@@ -290,7 +291,7 @@ export function Slideshow() {
               <li key={item.id}>
                 <button
                   aria-current={i === index ? 'true' : undefined}
-                  aria-label={`${slides.nav.pick} ${item.tenseLabel}`}
+                  aria-label={`${slides.nav.pick} ${item.sentence}`}
                   className={`slides__dot${i === index ? ' slides__dot--on' : ''}`}
                   onClick={() => go(i)}
                   type="button"

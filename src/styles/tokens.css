@@ -11,14 +11,8 @@
   --color-accent-ink: #ffffff;
   --color-accent-strong: #1c588c;
   --color-accent-wash: #e8f0f8;
-  /* Grammar colours carry tense and nothing else, so the action colour above
-     never competes with them inside a shape-coded sentence. */
+  /* Reserved marks that must not collide with the action colour. */
   --color-past: #6d4bb8;
-  --color-past-wash: #efeafb;
-  --color-present: #1a6e3a;
-  --color-present-wash: #e7f3ea;
-  --color-future: #9a5b06;
-  --color-future-wash: #faf0e2;
   --color-wrong: #a8321f;
   --color-wrong-wash: #fbeae7;
   --color-line: #dbe3ec;
@@ -28,11 +22,18 @@
   /* Shape Coding, taken from the sentence artwork in "A Boy". The word colours keep
      the artwork's hues but are darkened to clear 4.5:1 on the grey fill — the
      originals measured 3.16, 3.80 and 2.01. */
-  --color-shape: #c8d1d9;
+  /* White, matching the app (v3.3.4). The standalone artwork in "A Boy" fills its
+     containers grey; the shipping product does not. */
+  --color-shape: #ffffff;
   --color-shape-line: #000000;
   --color-role-article: #932595;
   --color-role-noun: #b01217;
   --color-role-verb: #2213ca;
+  /* Container fills by grammatical slot. The framework describes a red oval for Who
+     and a yellow upright semi-circle for Where; these are tinted rather than
+     saturated so the black outline and the words inside stay legible. */
+  --color-slot-who: #f6d8d8;
+  --color-slot-where: #f8ecc2;
 
   /* Type scale */
   --font-display: 'Mukta', system-ui, sans-serif;
@@ -59,6 +60,7 @@
   --measure: 62ch;
   --shell: 76rem;
   --scene: 18rem;
+  --scene-sm: 11rem;
   /* Proportions from the artwork's shape outlines: oval 382x208, diamond 237x205,
      hexagon 327x199. All one height, width varying by aspect. */
   --shape-h: 4.8rem;
@@ -66,6 +68,8 @@
   --shape-diamond-w: 5.6rem;
   --shape-hex-w: 7.9rem;
   --pictogram: 3.6rem;
+  --token: 8.5rem;
+  --sign: 7.5rem;
   --video: 17rem;
   --logo: 2.75rem;
 

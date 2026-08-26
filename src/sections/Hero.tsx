@@ -10,7 +10,6 @@ export function Hero() {
     <section className="hero">
       <div className="shell hero__inner">
         <div className="hero__copy">
-          <p className="hero__eyebrow">{hero.eyebrow}</p>
           <h1 className="hero__title">{hero.title}</h1>
           <p className="hero__body measure">{hero.body}</p>
           <div className="hero__actions">

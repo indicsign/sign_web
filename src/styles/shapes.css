@@ -1,0 +1,163 @@
+/* Per-piece inputs are declared in Confetti.css; nothing here needs them. */
+.coded {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  /* The shapes are sized in rem, so the words inside must not inherit a section's
+     display scale — that is what made them overflow their shapes. */
+  font-size: var(--step-0);
+  gap: var(--space-3);
+}
+
+.coded__unit {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The pictogram stands on the shape, overlapping its top edge, the way the sentence
+   artwork draws it. */
+.coded__pic {
+  height: var(--pictogram);
+  margin-bottom: calc(var(--space-3) * -1);
+  position: relative;
+  width: auto;
+  z-index: 1;
+}
+
+.coded__shape {
+  align-items: center;
+  display: flex;
+  height: var(--shape-h);
+  justify-content: center;
+  position: relative;
+}
+
+.coded__shape--oval {
+  background-color: var(--color-shape);
+  border: var(--stroke) solid var(--color-shape-line);
+  border-radius: 50%;
+  width: var(--shape-oval-w);
+}
+
+/* An upright semi-circle: flat along the bottom, curved over the top. */
+.coded__shape--semicircle {
+  background-color: var(--color-shape);
+  border: var(--stroke) solid var(--color-shape-line);
+  border-radius: 50% 50% 0 0;
+  width: var(--shape-oval-w);
+}
+
+/* The slot colours the container, so Who and Where are told apart before a word is
+   even read. */
+.coded__shape--who {
+  background-color: var(--color-slot-who);
+}
+
+.coded__shape--where {
+  background-color: var(--color-slot-where);
+}
+
+.coded__shape--semicircle .coded__words {
+  padding-inline: var(--space-3);
+}
+
+/* Diamond and hexagon are drawn the same way: clip-path takes no border, so the
+   outline is a second, slightly larger shape stacked behind the fill. */
+.coded__shape--diamond,
+.coded__shape--hexagon {
+  background: none;
+  border: none;
+}
+
+.coded__shape--diamond::before,
+.coded__shape--diamond::after,
+.coded__shape--hexagon::before,
+.coded__shape--hexagon::after {
+  content: '';
+  position: absolute;
+}
+
+.coded__shape--diamond::before,
+.coded__shape--hexagon::before {
+  background-color: var(--color-shape-line);
+  inset: 0;
+}
+
+.coded__shape--diamond::after,
+.coded__shape--hexagon::after {
+  background-color: var(--color-shape);
+  inset: var(--stroke);
+}
+
+.coded__shape--diamond {
+  width: var(--shape-diamond-w);
+}
+
+.coded__shape--diamond::before,
+.coded__shape--diamond::after {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.coded__shape--hexagon {
+  width: var(--shape-hex-w);
+}
+
+.coded__shape--hexagon::before,
+.coded__shape--hexagon::after {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.coded__words {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  justify-content: center;
+  max-width: 100%;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+/* Angled sides leave less room than the box suggests, so the words are held clear
+   of the points. */
+.coded__shape--oval .coded__words {
+  padding-inline: var(--space-3);
+}
+
+.coded__shape--diamond .coded__words {
+  max-width: 58%;
+}
+
+.coded__shape--hexagon .coded__words {
+  max-width: 72%;
+}
+
+.coded__word {
+  border-bottom: var(--stroke) solid currentColor;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.coded__word--article {
+  color: var(--color-role-article);
+}
+
+.coded__word--noun {
+  color: var(--color-role-noun);
+}
+
+.coded__word--verb {
+  color: var(--color-role-verb);
+}
+
+.coded__plain {
+  align-self: center;
+}
+
+@media (max-width: 48rem) {
+  .coded {
+    gap: var(--space-2);
+  }
+}

@@ -40,7 +40,8 @@
   }
 
   .closing__scene {
-    display: none;
+    justify-self: start;
+    width: var(--scene-sm);
   }
 }
 

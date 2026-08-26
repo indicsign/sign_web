@@ -15,9 +15,7 @@
   width: var(--scene);
 }
 
-/* The panel borrows the hero lesson panel's bar-plus-body shape, so the two things
-   on the page that show the product read as the same product. */
-.quiz {
+.build {
   background-color: var(--color-raised);
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
@@ -25,7 +23,9 @@
   overflow: hidden;
 }
 
-.quiz__bar {
+/* Names the exercise and the position in the cycle. The tense itself is still not
+   named — that is the thing the shapes are there to teach. */
+.build__bar {
   align-items: center;
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-line);
@@ -35,151 +35,170 @@
   padding: var(--space-3) var(--space-4);
 }
 
-/* Each question wears its own tense colour, the same chip the hero slides use. */
-.quiz__tense {
-  border-radius: var(--radius-pill);
+.build__tag {
+  color: var(--color-accent);
   font-family: var(--font-display);
   font-size: var(--step--1);
   font-weight: 700;
-  letter-spacing: 0.06em;
-  padding-inline: var(--space-3);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.quiz__tense--past {
-  background-color: var(--color-past-wash);
-  color: var(--color-past);
-}
-
-.quiz__tense--present {
-  background-color: var(--color-present-wash);
-  color: var(--color-present);
-}
-
-.quiz__tense--future {
-  background-color: var(--color-future-wash);
-  color: var(--color-future);
-}
-
-.quiz__count {
+.build__count {
   color: var(--color-ink-soft);
   font-size: var(--step--1);
 }
 
-.quiz__body {
+.build__body {
   display: grid;
   gap: var(--space-4);
-  justify-items: start;
-  padding: var(--space-4);
-  position: relative;
+  padding: var(--space-5) var(--space-4);
 }
 
-/* No font-size here: the shapes are fixed sizes and the words are scaled to fit
-   inside them by CodedSentence. */
-.quiz__prompt {
-  margin-block: var(--space-2);
-}
-
-/* The blank is the drop target, sitting inside the diamond where the verb belongs. */
-.quiz__slot {
-  border-bottom: var(--stroke) dashed currentColor;
-  display: inline-block;
-  min-width: 2.4em;
-  text-align: center;
-  transition: background-color 140ms ease;
-}
-
-.quiz__slot--filled {
-  border-bottom-color: transparent;
-}
-
-.quiz__slot--armed {
-  background-color: var(--color-raised);
-  border-bottom-style: solid;
-}
-
-.quiz__slot--over {
-  background-color: var(--color-past-wash);
-  border-bottom-style: solid;
-}
-
-/* Directly under the sentence, so the drag is short and the blank it belongs to is
-   the nearest thing on screen. */
-.quiz__options {
+/* The sentence scaffold. Empty shapes carry no word and no picture — their form and
+   fill are the only clue, which is the thing being learned. */
+.build__row {
+  align-items: flex-end;
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  position: relative;
 }
 
-.quiz__option {
+.build__unit {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Holds the pictogram's height from the start, filled or not. */
+.build__pic {
+  display: block;
+  height: var(--pictogram);
+  margin-bottom: calc(var(--space-3) * -1);
+  position: relative;
+  z-index: 1;
+}
+
+.build__pic img {
+  height: 100%;
+  width: auto;
+}
+
+.build__slot {
+  cursor: default;
+  padding: 0;
+  transition: box-shadow 140ms ease, filter 140ms ease;
+}
+
+/* Only lit while a word is waiting to be placed, so the board is calm until then. */
+.build__slot--open {
+  box-shadow: 0 0 0 var(--stroke) var(--color-accent);
+  cursor: pointer;
+}
+
+.build__slot--filled {
+  cursor: default;
+}
+
+.build__slot--refused {
+  animation: build-refuse 320ms ease;
+}
+
+@keyframes build-refuse {
+  25% {
+    transform: translateX(calc(var(--space-1) * -1));
+  }
+
+  75% {
+    transform: translateX(var(--space-1));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .build__slot--refused {
+    animation: none;
+    box-shadow: 0 0 0 var(--stroke) var(--color-wrong);
+  }
+}
+
+/* Uniform width on purpose: a word must never be identifiable by being the only one
+   long enough to fit. */
+.build__tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.build__token {
   background-color: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius);
   cursor: grab;
-  font-size: var(--step-2);
-  padding: var(--space-2) var(--space-4);
-  transition: border-color 140ms ease;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 700;
+  padding: var(--space-2);
+  text-align: center;
+  transition: border-color 140ms ease, background-color 140ms ease;
+  width: var(--token);
 }
 
-.quiz__option:hover {
+.build__token:hover {
   border-color: var(--color-ink-soft);
 }
 
-.quiz__option:active {
+.build__token:active {
   cursor: grabbing;
 }
 
-.quiz__option--correct {
+.build__token--picked {
   background-color: var(--color-accent-wash);
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
 
-.quiz__option--wrong {
-  background-color: var(--color-wrong-wash);
-  border-color: var(--color-wrong);
-  color: var(--color-wrong);
+.build__tray-note {
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
 }
 
-.quiz__feedback {
+.build__verdict {
   border-top: 1px solid var(--color-line);
   min-height: var(--space-6);
   padding-top: var(--space-4);
 }
 
-.quiz__verdict {
+.build__result {
   align-items: center;
   display: grid;
   gap: var(--space-3);
   grid-template-columns: auto 1fr;
 }
 
-.quiz__verdict-copy {
+.build__result-copy {
   display: grid;
   gap: var(--space-2);
   justify-items: start;
 }
 
-.quiz__sign {
+.build__sign {
   width: var(--space-7);
 }
 
-/* Anchors the burst so the confetti radiates from the tick itself. */
-.quiz__burst {
+.build__burst {
   display: grid;
   place-items: center;
   position: relative;
 }
 
-/* Accent rather than green: green already means present tense on this page. */
-.quiz__tick {
+/* Accent, not green: green is not a role colour in this system. */
+.build__tick {
   color: var(--color-accent);
   height: auto;
   width: var(--space-6);
 }
 
-.quiz__label {
+.build__label {
   border-radius: var(--radius-pill);
   font-family: var(--font-display);
   font-size: var(--step--1);
@@ -189,21 +208,34 @@
   text-transform: uppercase;
 }
 
-.quiz__label--correct {
+.build__label--done {
   background-color: var(--color-accent-wash);
   color: var(--color-accent);
 }
 
-.quiz__label--wrong {
+.build__label--wrong {
   background-color: var(--color-wrong-wash);
   color: var(--color-wrong);
 }
 
-.quiz__feedback-text {
+.build__message {
   color: var(--color-ink-soft);
 }
 
-.quiz__next {
+.build__result .build__message {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+
+.build__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.build__again {
   background: none;
   border: 1px solid var(--color-accent);
   border-radius: var(--radius);
@@ -212,22 +244,36 @@
   font-family: var(--font-display);
   font-weight: 700;
   padding: var(--space-2) var(--space-3);
-  transition: background-color 140ms ease;
 }
 
-.quiz__next:hover {
+.build__again:hover {
   background-color: var(--color-accent-wash);
 }
 
-/* The key sits with the shapes it explains, at the foot of the panel that uses them,
-   folded away until asked for. */
-.quiz__key {
+.build__replay {
+  background: none;
+  border: none;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: var(--space-2) 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.build__replay:hover {
+  color: var(--color-ink);
+}
+
+/* Folded away: the shapes mostly explain themselves once one is filled. */
+.build__key {
   background-color: var(--color-surface);
   border-top: 1px solid var(--color-line);
   padding: var(--space-3) var(--space-4);
 }
 
-.quiz__key-toggle {
+.build__key-toggle {
   color: var(--color-ink-soft);
   cursor: pointer;
   font-family: var(--font-display);
@@ -237,11 +283,11 @@
   text-transform: uppercase;
 }
 
-.quiz__key-toggle:hover {
+.build__key-toggle:hover {
   color: var(--color-ink);
 }
 
-.quiz__key-list {
+.build__key-list {
   display: grid;
   gap: var(--space-3);
   list-style: none;
@@ -249,7 +295,7 @@
   padding: var(--space-4) 0 var(--space-2);
 }
 
-.quiz__key-item {
+.build__key-item {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
@@ -257,125 +303,35 @@
   gap: var(--space-2) var(--space-3);
 }
 
-/* Key samples are miniatures of the real shapes, not separate icons. */
-.quiz__key-item .coded__shape {
+.build__key-item .coded__shape {
   font-size: var(--step--1);
   height: calc(var(--shape-h) / 1.7);
 }
 
-.quiz__key-item .coded__shape--oval {
+.build__key-item .coded__shape--oval,
+.build__key-item .coded__shape--semicircle {
   width: calc(var(--shape-oval-w) / 1.7);
 }
 
-.quiz__key-item .coded__shape--diamond {
+.build__key-item .coded__shape--diamond {
   width: calc(var(--shape-diamond-w) / 1.7);
 }
 
-.quiz__key-item .coded__shape--hexagon {
+.build__key-item .coded__shape--hexagon {
   width: calc(var(--shape-hex-w) / 1.7);
 }
 
-.quiz__key-meaning {
+.build__key-meaning {
   color: var(--color-ink-soft);
-}
-
-/* A short demonstration of the gesture, anchored to the options row itself rather
-   than to the panel, so it stays aimed at the sentence even if the panel reflows. */
-.quiz__demo {
-  align-items: center;
-  display: none;
-  gap: var(--space-1);
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-}
-
-.quiz__demo-chip {
-  background-color: var(--color-past-wash);
-  border-radius: var(--radius);
-  color: var(--color-past);
-  font-weight: 700;
-  padding-inline: var(--space-2);
-}
-
-.quiz__demo-cursor {
-  color: var(--color-ink);
-  display: flex;
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .quiz__demo {
-    animation: quiz-demo-carry 4600ms cubic-bezier(0.4, 0, 0.3, 1) infinite;
-    display: flex;
-  }
-
-  .quiz__demo-chip {
-    animation: quiz-demo-chip 4600ms linear infinite;
-  }
-
-  .quiz__demo-cursor {
-    animation: quiz-demo-cursor 4600ms linear infinite;
-  }
-}
-
-@keyframes quiz-demo-carry {
-  0%,
-  24% {
-    transform: translate(var(--space-2), var(--space-2));
-  }
-
-  62%,
-  100% {
-    transform: translate(var(--space-4), calc(var(--space-5) * -1));
-  }
-}
-
-@keyframes quiz-demo-chip {
-  0%,
-  18% {
-    opacity: 0;
-  }
-
-  24%,
-  72% {
-    opacity: 1;
-  }
-
-  82%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes quiz-demo-cursor {
-  0% {
-    opacity: 0;
-  }
-
-  12%,
-  84% {
-    opacity: 1;
-  }
-
-  95%,
-  100% {
-    opacity: 0;
-  }
 }
 
 @media (max-width: 64rem) {
   .practice__inner {
-    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-5);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .practice__scene {
-    display: none;
-  }
-
-  .quiz__prompt {
-    font-size: var(--step-1);
+    width: var(--scene-sm);
   }
 }

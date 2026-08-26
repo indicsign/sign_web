@@ -25,7 +25,7 @@ export function Footer() {
           <h2 className="site-footer__heading">{footer.navHeading}</h2>
           <ul className="site-footer__links">
             <li>
-              <a href="#units">{nav.units}</a>
+              <a href="#journey">{nav.journey}</a>
             </li>
             <li>
               <a href="#vocabulary">{nav.words}</a>
