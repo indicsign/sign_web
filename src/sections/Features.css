@@ -58,16 +58,9 @@
 }
 
 .demo--shapes .coded__shape {
+  --shape-scale: 0.62;
+
   font-size: var(--step--1);
-  height: calc(var(--shape-h) * 0.62);
-}
-
-.demo--shapes .coded__shape--oval {
-  width: calc(var(--shape-oval-w) * 0.62);
-}
-
-.demo--shapes .coded__shape--diamond {
-  width: calc(var(--shape-diamond-w) * 0.62);
 }
 
 /* Three words of very different length, all one width — the point made rather than

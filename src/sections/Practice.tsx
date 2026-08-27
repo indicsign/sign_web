@@ -254,20 +254,31 @@ export function Practice() {
             <summary className="build__key-toggle">{shapeKey.heading}</summary>
             <ul className="build__key-list">
               {shapeKey.items.map((item) => (
-                <li className="build__key-item" key={`${item.shape}-${item.label}`}>
+                <li className="build__key-item" key={item.part}>
                   <span
                     className={`coded__shape coded__shape--${item.shape}${
-                      'slot' in item && item.slot ? ` coded__shape--${item.slot}` : ''
+                      item.slot ? ` coded__shape--${item.slot}` : ''
                     }`}
                   >
                     <span className="coded__words">
-                      <span className="coded__word">{item.label}</span>
+                      {item.words.map((word) => (
+                        <span
+                          className={word.role ? `coded__word coded__word--${word.role}` : 'coded__word'}
+                          key={word.text}
+                        >
+                          {word.text}
+                        </span>
+                      ))}
                     </span>
                   </span>
-                  <span className="build__key-meaning">{item.meaning}</span>
+                  <span className="build__key-text">
+                    <span className="build__key-part">{item.part}</span>
+                    <span className="build__key-meaning">{item.question}</span>
+                  </span>
                 </li>
               ))}
             </ul>
+            <p className="build__key-note">{shapeKey.note}</p>
           </details>
         </div>
       </div>

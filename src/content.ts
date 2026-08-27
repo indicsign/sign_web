@@ -24,10 +24,21 @@ export const hero = {
 
 // Shape Coding, matched to the sentence artwork in "A Boy": an oval holds who or what,
 // with its pictogram standing on it; a diamond holds the verb. Word colour marks the
-// part of speech — article, noun, verb — the way the artwork underlines them.
-export type Shape = 'oval' | 'diamond' | 'hexagon' | 'semicircle'
+// part of speech the way the artwork underlines them. The full framework is nine
+// containers; the sentences on this page use four of them, and the key below shows
+// all nine.
+export type Shape =
+  | 'oval'
+  | 'rectangle'
+  | 'hexagon'
+  | 'cloud'
+  | 'semicircle'
+  | 'triangle'
+  | 'triangle-right'
+  | 'diamond'
+  | 'semicircle-down'
 export type Slot = 'who' | 'what' | 'where'
-export type Role = 'article' | 'noun' | 'verb'
+export type Role = 'article' | 'noun' | 'verb' | 'adjective' | 'preposition' | 'time' | 'adverb'
 
 export type Word = {
   text: string
@@ -44,14 +55,86 @@ export type CodedToken = {
   picture?: 'boy' | 'apple'
 }
 
+export type KeyRow = {
+  /** The grammatical part, as the framework names it. */
+  part: string
+  /** The question a student asks to find it. */
+  question: string
+  shape: Shape
+  slot?: Slot
+  /** An example shown inside the container, coloured the way the framework colours it. */
+  words: readonly Word[]
+}
+
+// The whole framework, in the order a sentence is usually built. Kept as a plain typed
+// array rather than a const assertion so a row without a slot stays the same shape as
+// one with it.
+const KEY_ROWS: readonly KeyRow[] = [
+  {
+    part: 'Subject',
+    question: 'Who or what?',
+    shape: 'oval',
+    slot: 'who',
+    words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }],
+  },
+  {
+    part: 'Auxiliary verb',
+    question: 'Is or are?',
+    shape: 'diamond',
+    words: [{ text: 'is', role: 'verb' }],
+  },
+  {
+    part: 'Verb',
+    question: 'What doing?',
+    shape: 'hexagon',
+    words: [{ text: 'eating', role: 'verb' }],
+  },
+  {
+    part: 'Object',
+    question: 'Who or what?',
+    shape: 'rectangle',
+    words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }],
+  },
+  {
+    part: 'Adjective phrase',
+    question: 'What like, or how feeling?',
+    shape: 'cloud',
+    words: [{ text: 'happy', role: 'adjective' }],
+  },
+  {
+    part: 'Prepositional phrase',
+    question: 'Where?',
+    shape: 'semicircle',
+    slot: 'where',
+    words: [{ text: 'at', role: 'preposition' }, { text: 'school' }],
+  },
+  {
+    part: 'Time',
+    question: 'When?',
+    shape: 'triangle',
+    words: [{ text: 'today', role: 'time' }],
+  },
+  {
+    part: 'Adverbs and means',
+    question: 'How?',
+    shape: 'triangle-right',
+    words: [{ text: 'quickly', role: 'adverb' }],
+  },
+  {
+    part: 'Second person',
+    question: 'Who is being spoken to?',
+    shape: 'semicircle-down',
+    slot: 'who',
+    words: [{ text: 'you', role: 'noun' }],
+  },
+]
+
 export const shapeKey = {
   heading: 'How to read the shapes',
-  items: [
-    { shape: 'oval' as Shape, slot: 'who' as Slot, label: 'A boy', meaning: 'who the sentence is about' },
-    { shape: 'diamond' as Shape, label: 'eats', meaning: 'the word carrying the tense' },
-    { shape: 'hexagon' as Shape, label: 'eating', meaning: 'the verb that follows it' },
-    { shape: 'oval' as Shape, slot: 'what' as Slot, label: 'an apple', meaning: 'what it is done to' },
-  ],
+  // Two of the nine colours mark one word rather than the whole container, and a
+  // reader who misses that will colour the noun after a preposition yellow.
+  note: 'Yellow marks the preposition itself and brown the adverb itself — the rest of those phrases stays in the plain ink.',
+  items: KEY_ROWS,
 } as const
 
 export type Slide = {
@@ -284,7 +367,17 @@ export const practice = {
   next: 'Next tense',
   // Names the container for a screen reader without naming the role it wants — the
   // shape is on screen either way, the answer is not.
-  shapeNames: { oval: 'oval', diamond: 'diamond', hexagon: 'hexagon', semicircle: 'semi-circle' },
+  shapeNames: {
+    oval: 'oval',
+    rectangle: 'rectangle',
+    hexagon: 'hexagon',
+    cloud: 'cloud',
+    semicircle: 'semi-circle',
+    triangle: 'triangle',
+    'triangle-right': 'right-facing triangle',
+    diamond: 'diamond',
+    'semicircle-down': 'upside-down semi-circle',
+  } satisfies Record<Shape, string>,
   emptyLabel: 'Empty',
   rounds: [
     {
