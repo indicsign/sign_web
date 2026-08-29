@@ -1,0 +1,86 @@
+.panel {
+  background-color: var(--color-raised);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-panel);
+  overflow: hidden;
+}
+
+.panel__bar {
+  align-items: center;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+  display: flex;
+  gap: var(--space-3);
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+}
+
+.panel__stage {
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding-inline: var(--space-3);
+  text-transform: uppercase;
+}
+
+.panel__body {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: center;
+  padding: var(--space-4);
+}
+
+.panel__sentence {
+  height: auto;
+  width: 100%;
+}
+
+/* The clip's own proportions, held whether or not the file has arrived, so a panel
+   still loading reserves its space instead of resizing under the reader. The wash is
+   what shows through until the first frame decodes. */
+.panel__frame {
+  aspect-ratio: 2574 / 3218;
+  background-color: var(--color-accent-wash);
+  border-radius: var(--radius);
+  height: var(--video);
+  overflow: hidden;
+}
+
+.panel__video {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* One control now the transport is gone, so it sits at the end rather than being
+   centred between a pair that no longer exists. */
+.panel__nav {
+  align-items: center;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-2) var(--space-3);
+}
+
+.panel__step {
+  align-items: center;
+  background: none;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--color-accent);
+  cursor: pointer;
+  display: flex;
+  height: var(--space-5);
+  justify-content: center;
+  padding: 0;
+  transition: background-color 140ms ease;
+  width: var(--space-5);
+}
+
+.panel__step:hover {
+  background-color: var(--color-accent-wash);
+}

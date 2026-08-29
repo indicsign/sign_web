@@ -15,31 +15,6 @@ import wrongSignUrl from '../assets/lottie/wrong-sign.json?url'
 import './Practice.css'
 
 const PICTURES = { boy: boyPic, apple: applePic }
-const ROUND_KEY = 'indic-sign:build-round'
-
-// Each reload opens on the next tense in the cycle: past, present, future, past…
-// Memoised at module scope so it resolves once per page load — a StrictMode double
-// render or a remount would otherwise skip a turn.
-let resolved: number | null = null
-
-function openingRound(count: number) {
-  if (resolved !== null) return resolved
-
-  let start = 0
-  try {
-    const stored = window.localStorage.getItem(ROUND_KEY)
-    const previous = stored === null ? -1 : Number.parseInt(stored, 10)
-    start = Number.isInteger(previous) ? (((previous + 1) % count) + count) % count : 0
-    window.localStorage.setItem(ROUND_KEY, String(start))
-  } catch {
-    // A private window, cleared site data, or a browser set to block storage all throw
-    // here. Opening on the past tense is a perfectly good fallback.
-    start = 0
-  }
-
-  resolved = start
-  return start
-}
 
 type Placed = Record<string, string | undefined>
 
@@ -47,7 +22,6 @@ type Placed = Record<string, string | undefined>
 export function Practice() {
   const reveal = useReveal<HTMLDivElement>()
 
-  const [roundIndex, setRoundIndex] = useState(() => openingRound(practice.rounds.length))
   const [placed, setPlaced] = useState<Placed>({})
   const [selected, setSelected] = useState<string | null>(null)
   const [wrong, setWrong] = useState<string | null>(null)
@@ -55,7 +29,7 @@ export function Practice() {
   // twice has to shake it twice, and an unchanged value would not re-render.
   const [refused, setRefused] = useState<{ slot: string; n: number } | null>(null)
 
-  const round = practice.rounds[roundIndex]
+  const round = practice.round
   const remaining = round.tokens.filter((token) => !placed[token.id])
   const done = remaining.length === 0
 
@@ -87,14 +61,6 @@ export function Practice() {
     return () => window.clearTimeout(timer)
   }, [refused])
 
-  const advance = () => {
-    setRoundIndex((current) => (current + 1) % practice.rounds.length)
-    setPlaced({})
-    setSelected(null)
-    setWrong(null)
-    setRefused(null)
-  }
-
   const reset = () => {
     setPlaced({})
     setSelected(null)
@@ -117,14 +83,8 @@ export function Practice() {
         </div>
 
         <div className="build">
-          {/* The tense is deliberately not named: the shapes are what the reader is
-              meant to work from, and labelling the round would hand over the answer
-              the diamond and hexagon are there to teach. */}
           <div className="build__bar">
             <span className="build__tag">{practice.tag}</span>
-            <span className="build__count">
-              {roundIndex + 1} / {practice.rounds.length}
-            </span>
           </div>
 
           <div className="build__body">
@@ -223,10 +183,7 @@ export function Practice() {
                   <p className="build__label build__label--done">{practice.doneLabel}</p>
                   <p className="build__message">{round.sentence}</p>
                   <div className="build__actions">
-                    <button className="build__again" onClick={advance} type="button">
-                      {practice.next}
-                    </button>
-                    <button className="build__replay" onClick={reset} type="button">
+                    <button className="build__again" onClick={reset} type="button">
                       {practice.restart}
                     </button>
                   </div>
