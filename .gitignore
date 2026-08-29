@@ -2,6 +2,15 @@ node_modules
 dist
 .DS_Store
 *.local
+
+# Local notes and scratch files. Both spellings, because the pattern is case-sensitive
+# even where the filesystem is not.
 .claude.md
-.env.example
-.__shapecheck.html
+claude.md
+CLAUDE.md
+__shapecheck.html
+
+# Secrets and their template. No negation for .env.example any more — the template is
+# kept out of the repository too.
+.env
+.env.*
