@@ -4,14 +4,24 @@ dist
 .github
 .DS_Store
 *.local
-.claude.md
-.CLAUDE.md
-.__shapecheck.html
 
-# Local secrets and the template documenting them; the image needs neither, and
-# the build stage does a COPY . . that would otherwise pull a local .env in.
+# Local notes and scratch files. No leading dot — these are the real filenames, and
+# a pattern that does not match one is silently no pattern at all.
+.claude.md
+claude.md
+CLAUDE.md
+__shapecheck.html
+
+# Secrets and their template. The image needs neither: the Dockerfile passes
+# VITE_SUBPAGE as a build ARG, and Vite reads it from the process environment rather
+# than from a file. The build stage does a COPY . . that would otherwise pull a local
+# .env into the layer.
 .env
 .env.*
+
+# The shape-coding generator is a build-time tool run by hand on a developer's
+# machine, and it ships compiled objects and a binary. None of it belongs in the image.
+tools
 
 # Stray top-level copies of the lesson videos; the real ones live in
 # src/assets/video and are imported by the hero.
