@@ -22,11 +22,17 @@ jobs:
       - run: npm ci
       - run: npm run lint
       # `npm run build` typechecks before it bundles, so tsc runs here too.
-      # VITE_SUBPAGE is required: the build refuses to run without it rather than
-      # emitting a page whose calls to action go nowhere.
+      #
+      # The build refuses to run without VITE_SUBPAGE rather than emitting a page
+      # whose calls to action go nowhere. This job only ever validates — it never
+      # deploys — so a missing secret falls back to an address that cannot resolve.
+      # A pull request from a fork gets no secrets at all, and still has to be able
+      # to compile. The publish job below is where the real value is mandatory.
       - run: npm run build
         env:
-          VITE_SUBPAGE: ${{ secrets.VITE_SUBPAGE }}
+          VITE_SUBPAGE: ${{ secrets.VITE_SUBPAGE || 'https://vite-subpage-not-configured.invalid/' }}
+      # Built for inspection, not for deployment: if the secret was absent, every
+      # call to action in this artifact points at the placeholder above.
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -44,8 +50,11 @@ jobs:
           context: .
           push: false
           tags: indicai-landing:${{ github.sha }}
+          # Same fallback as above, for the same reason. On a push to main the secret
+          # is present, so this builds the identical layers publish then reuses; only
+          # a fork's pull request gets the placeholder, and a fork never publishes.
           build-args: |
-            VITE_SUBPAGE=${{ secrets.VITE_SUBPAGE }}
+            VITE_SUBPAGE=${{ secrets.VITE_SUBPAGE || 'https://vite-subpage-not-configured.invalid/' }}
           # Publish pulls these layers back out of the cache, so the image is
           # only ever built once per commit, and it is built before the
           # production environment's protection rules can hold the push.
@@ -62,6 +71,17 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+      # No fallback here. Publishing an image whose every call to action points at an
+      # unreachable placeholder is worse than not publishing, and the page gives no
+      # sign anything is wrong — Button renders a dead control rather than an error.
+      - name: Require the real CTA URL
+        env:
+          VITE_SUBPAGE: ${{ secrets.VITE_SUBPAGE }}
+        run: |
+          if [ -z "$VITE_SUBPAGE" ]; then
+            echo "::error::VITE_SUBPAGE is not set. Add it under Settings -> Secrets and variables -> Actions, then re-run."
+            exit 1
+          fi
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:
