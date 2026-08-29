@@ -1,0 +1,190 @@
+/* The table is the section's whole point, so it gets the room. Below the breakpoint
+   the columns are already at their floor, and scrolling the table beats crushing a
+   container until its word no longer fits. */
+.key__scroll {
+  margin-top: var(--space-5);
+  overflow-x: auto;
+}
+
+.key {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+}
+
+.key__head {
+  border-bottom: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding-bottom: var(--space-3);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The shape column is pinned to the width of the widest container, so nine shapes of
+   different widths still leave the colour column on one line down the whole table. */
+.key__head:nth-child(2),
+.key__cell:nth-child(2) {
+  width: calc(var(--shape-tri-right-w) * 0.72 + var(--space-4));
+}
+
+.key__row + .key__row .key__cell {
+  border-top: 1px solid var(--color-line);
+}
+
+.key__cell {
+  font-weight: 400;
+  padding-block: var(--space-3);
+  padding-right: var(--space-4);
+  vertical-align: middle;
+}
+
+.key__cell:last-child {
+  padding-right: 0;
+}
+
+.key__cell--part {
+  display: table-cell;
+  min-width: 9rem;
+}
+
+.key__part {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.key__question {
+  color: var(--color-ink-soft);
+  display: block;
+  font-size: var(--step--1);
+}
+
+/* Smaller than the containers in the quiz: here they are being compared, not used. */
+.key__cell .coded__shape {
+  --shape-scale: 0.72;
+
+  font-size: var(--step--1);
+}
+
+.key__colour {
+  align-items: center;
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Square, matching the containers beside it — every shape in this table has a real
+   edge, and a round swatch was the one thing in the row that did not. */
+.key__swatch {
+  border: 1px solid var(--color-line-strong);
+  border-radius: 0;
+  flex: none;
+  height: var(--space-5);
+  width: var(--space-5);
+}
+
+.key__swatch--noun {
+  background-color: var(--color-role-noun);
+}
+
+.key__swatch--verb {
+  background-color: var(--color-role-verb);
+}
+
+.key__swatch--adjective {
+  background-color: var(--color-role-adjective);
+}
+
+.key__swatch--preposition {
+  background-color: var(--color-role-preposition);
+}
+
+.key__swatch--time {
+  background-color: var(--color-role-time);
+}
+
+.key__swatch--adverb {
+  background-color: var(--color-role-adverb);
+}
+
+.key__colour-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.key__example {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--step-0);
+  gap: 0.3em;
+}
+
+/* Says which word the colour lands on, for the two rows where it is not the whole
+   phrase. */
+.key__colour-only {
+  color: var(--color-ink-soft);
+  display: block;
+  font-size: var(--step--1);
+}
+
+.key__note {
+  color: var(--color-ink-soft);
+  font-size: var(--step--1);
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 48rem) {
+  .key__cell .coded__shape {
+    --shape-scale: 0.62;
+  }
+
+  .key__head:nth-child(2),
+  .key__cell:nth-child(2) {
+    width: calc(var(--shape-tri-right-w) * 0.62 + var(--space-3));
+  }
+
+  .key__cell {
+    padding-right: var(--space-3);
+  }
+
+  .key__cell--part {
+    min-width: 7rem;
+  }
+}
+
+/* One orchestrated moment for the section: the heading arrives, then the nine rows
+   cascade under it. Nothing here hovers, flashes or repeats — the cascade plays once,
+   when the table first comes into view.
+
+   Under reduced motion none of these rules exist and every row is simply there. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal .key__row {
+    opacity: 0;
+    transform: translateY(var(--space-3));
+  }
+
+  .reveal--in .key__row {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 420ms ease,
+      transform 420ms cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  /* Written out rather than computed: nine rows, and CSS has no way to say "index
+     times a step" without putting the index in the markup. */
+  .reveal--in .key__row:nth-child(1) { transition-delay: 120ms; }
+  .reveal--in .key__row:nth-child(2) { transition-delay: 175ms; }
+  .reveal--in .key__row:nth-child(3) { transition-delay: 230ms; }
+  .reveal--in .key__row:nth-child(4) { transition-delay: 285ms; }
+  .reveal--in .key__row:nth-child(5) { transition-delay: 340ms; }
+  .reveal--in .key__row:nth-child(6) { transition-delay: 395ms; }
+  .reveal--in .key__row:nth-child(7) { transition-delay: 450ms; }
+  .reveal--in .key__row:nth-child(8) { transition-delay: 505ms; }
+  .reveal--in .key__row:nth-child(9) { transition-delay: 560ms; }
+}

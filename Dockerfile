@@ -7,6 +7,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
+# The CTA target. Vite inlines VITE_ variables into the bundle, so it has to be here,
+# at build time — setting it on the host at run time would do nothing. Left unset, the
+# page falls back to the URL in src/content.ts.
+ARG VITE_SUBPAGE=
+ENV VITE_SUBPAGE=$VITE_SUBPAGE
 RUN npm run build
 
 FROM nginx:1.27-alpine

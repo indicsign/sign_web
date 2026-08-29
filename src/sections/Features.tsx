@@ -6,7 +6,7 @@ import './Features.css'
 
 /**
  * Each principle demonstrates itself with the real thing rather than an icon: the
- * actual containers, the actual uniform tokens, the actual disclosure.
+ * actual containers, the actual uniform tokens.
  */
 function Demo({ kind }: { kind: Principle['demo'] }) {
   if (kind === 'shapes') {
@@ -27,22 +27,11 @@ function Demo({ kind }: { kind: Principle['demo'] }) {
     )
   }
 
-  if (kind === 'tokens') {
-    return (
-      <span aria-hidden="true" className="demo demo--tokens">
-        <span className="demo__token">a</span>
-        <span className="demo__token">apple</span>
-        <span className="demo__token">at school</span>
-      </span>
-    )
-  }
-
   return (
-    <span aria-hidden="true" className="demo demo--legend">
-      <span className="demo__chip">
-        <span className="demo__chevron" />
-        How to read the shapes
-      </span>
+    <span aria-hidden="true" className="demo demo--tokens">
+      <span className="demo__token">a</span>
+      <span className="demo__token">apple</span>
+      <span className="demo__token">at school</span>
     </span>
   )
 }
@@ -51,14 +40,19 @@ export function Features() {
   const reveal = useReveal<HTMLDivElement>()
 
   return (
-    <section aria-labelledby="features-heading" className="section section--raised" id="features">
+    <section aria-labelledby="features-heading" className="section" id="features">
       <div className={`shell ${reveal.className}`} ref={reveal.ref}>
         <SectionHeading body={features.body} id="features-heading" title={features.heading} />
+
+        <h3 className="features__key" id="features-key">
+          {features.featuresHeading}
+        </h3>
 
         <div className="features__flows">
           {features.flows.map((flow) => (
             <div className="flow" key={flow.id}>
-              <h3 className="flow__title">{flow.title}</h3>
+              <h4 className="flow__title">{flow.title}</h4>
+              <p className="flow__line">{flow.line}</p>
               <ol className="flow__steps">
                 {flow.steps.map((step) => (
                   <li className="flow__step" key={step}>
@@ -74,7 +68,7 @@ export function Features() {
           {features.principles.map((item) => (
             <li className="principle" key={item.id}>
               <Demo kind={item.demo} />
-              <h3 className="principle__title">{item.title}</h3>
+              <h4 className="principle__title">{item.title}</h4>
               <p className="principle__body">{item.body}</p>
             </li>
           ))}

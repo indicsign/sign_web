@@ -31,7 +31,13 @@ export function Footer() {
               <a href="#vocabulary">{nav.words}</a>
             </li>
             <li>
+              <a href="#shapes">{nav.shapes}</a>
+            </li>
+            <li>
               <a href="#practice">{nav.practice}</a>
+            </li>
+            <li>
+              <a href="#schools">{nav.schools}</a>
             </li>
           </ul>
         </nav>
