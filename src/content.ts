@@ -15,7 +15,6 @@ export const CTA_LABEL = 'Start learning today'
 export const nav = {
   skipToContent: 'Skip to content',
   journey: 'The journey',
-  words: 'The words',
   shapes: 'The shapes',
   schools: 'For schools',
   practice: 'How practice works',
@@ -181,32 +180,14 @@ export const shapeNames = {
   'semicircle-down': 'upside-down semi-circle',
 } satisfies Record<Shape, string>
 
-export type Slide = {
-  id: 'past' | 'present' | 'future'
-  stage: string
-  sentence: string
-}
-
-// TODO(team): these three clips are the old tense set, kept because they are the only
-// signed sentences we have. Replace with Aashna's Unit 3 reference videos — the ids
-// map to the files in src/assets/video and src/assets/sentences.
-export const slides = {
-  nav: {
-    pick: 'Show',
-    prev: 'Previous sentence',
-    next: 'Next sentence',
-    stop: 'Pause the slides',
-    play: 'Play the slides',
-    of: 'of',
-  },
+// The hero panel shows one sentence: the present tense, signed. It carried past and
+// future too, behind a carousel; the page no longer teaches tense contrast.
+export const sentencePanel = {
+  stage: 'Sentences',
+  sentence: 'A boy is eating an apple',
   sound: { on: 'Turn the sound off', off: 'Turn the sound on' },
-  // No longer shown on the page — it is the video's accessible name only.
+  // Not shown on the page — it is the video's accessible name only.
   videoLabel: 'The same sentence in Indian Sign Language',
-  items: [
-    { id: 'past', stage: 'Sentences', sentence: 'A boy ate an apple' },
-    { id: 'present', stage: 'Sentences', sentence: 'A boy is eating an apple' },
-    { id: 'future', stage: 'Sentences', sentence: 'A boy will eat an apple' },
-  ] satisfies readonly Slide[],
 } as const
 
 export type Stage = {
@@ -333,31 +314,6 @@ export const explainer = {
   ] satisfies readonly Level[],
 } as const
 
-export type VocabWord = {
-  word: string
-  kind: 'noun' | 'verb' | 'adjective'
-  gloss: string
-  /** Set where an ISL clip for the word exists. */
-  sign?: 'water'
-}
-
-export const vocabulary = {
-  heading: 'Everyday words, signed first',
-  body:
-    'A word is signed on its own before it ever turns up inside a sentence. These come from the first stage of the journey, so a student meets them long before they have to read them in context.',
-  label: 'Words in stage one',
-  items: [
-    { word: 'water', kind: 'noun', gloss: 'the clear drink that comes from a tap or a well', sign: 'water' },
-    { word: 'school', kind: 'noun', gloss: 'the place you go to learn' },
-    { word: 'mother', kind: 'noun', gloss: 'the woman who is your parent' },
-    { word: 'book', kind: 'noun', gloss: 'pages joined together that you read' },
-    { word: 'house', kind: 'noun', gloss: 'the building you live in' },
-    { word: 'friend', kind: 'noun', gloss: 'someone you like and choose to be with' },
-    { word: 'eat', kind: 'verb', gloss: 'to take food into your mouth' },
-    { word: 'happy', kind: 'adjective', gloss: 'the way you feel when something is good' },
-  ] satisfies readonly VocabWord[],
-} as const
-
 export type BuildToken = {
   id: string
   label: string
@@ -374,8 +330,6 @@ export type BuildSlot = {
 }
 
 export type BuildRound = {
-  id: 'past' | 'present' | 'future'
-  label: string
   sentence: string
   slots: readonly BuildSlot[]
   tokens: readonly BuildToken[]
@@ -392,7 +346,7 @@ const WHAT: BuildToken = {
   id: 'what',
   label: 'an apple',
   words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }],
-  belongs: 'an apple is what gets eaten. It goes in the white oval at the end.',
+  belongs: 'an apple is what gets eaten. It goes in the rectangle at the end.',
 }
 
 // An empty shape shows nothing but its own outline and fill. The colour and the form
@@ -401,93 +355,41 @@ const WHAT: BuildToken = {
 export const practice = {
   heading: 'Build the sentence',
   body:
-    'The same boy and the same apple, once for each tense. Every token is the same width, so nothing can be worked out from the length of a word — the shape and its colour are the only clues, and they are the ones worth learning.',
+    'One boy, one apple, and the shapes they belong in. Every token is the same width, so nothing can be worked out from the length of a word — the shape and its colour are the only clues, and they are the ones worth learning.',
   tray: 'Drag each word into the shape it belongs in, or press a word and then press a shape.',
   tag: 'Quiz practice',
   wrongLabel: 'Not there',
   doneLabel: 'Correct',
   restart: 'Start again',
-  next: 'Next tense',
   // Names the container for a screen reader without naming the role it wants — the
   // shape is on screen either way, the answer is not.
   shapeNames,
   emptyLabel: 'Empty',
-  rounds: [
-    {
-      id: 'past',
-      label: 'Past',
-      sentence: 'A boy ate an apple',
-      slots: [
-        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
-        { id: 'tensed', shape: 'diamond' },
-        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
-      ],
-      tokens: [
-        WHAT,
-        {
-          id: 'tensed',
-          label: 'ate',
-          words: [{ text: 'ate', role: 'verb' }],
-          belongs: 'ate carries the tense on its own, so it belongs in the diamond.',
-        },
-        WHO,
-      ],
-    },
-    {
-      id: 'present',
-      label: 'Present',
-      sentence: 'A boy is eating an apple',
-      slots: [
-        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
-        { id: 'tensed', shape: 'diamond' },
-        { id: 'verb', shape: 'hexagon' },
-        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
-      ],
-      tokens: [
-        {
-          id: 'verb',
-          label: 'eating',
-          words: [{ text: 'eating', role: 'verb' }],
-          belongs: 'eating does not hold the tense — is does. It goes in the hexagon.',
-        },
-        WHO,
-        WHAT,
-        {
-          id: 'tensed',
-          label: 'is',
-          words: [{ text: 'is', role: 'verb' }],
-          belongs: 'is is the word carrying the tense, and that always sits in the diamond.',
-        },
-      ],
-    },
-    {
-      id: 'future',
-      label: 'Future',
-      sentence: 'A boy will eat an apple',
-      slots: [
-        { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
-        { id: 'tensed', shape: 'diamond' },
-        { id: 'verb', shape: 'hexagon' },
-        { id: 'what', shape: 'oval', slot: 'what', picture: 'apple' },
-      ],
-      tokens: [
-        {
-          id: 'tensed',
-          label: 'will',
-          words: [{ text: 'will', role: 'verb' }],
-          belongs: 'will is what makes it future, so it takes the diamond.',
-        },
-        WHAT,
-        {
-          id: 'verb',
-          label: 'eat',
-          words: [{ text: 'eat', role: 'verb' }],
-          belongs: 'will already holds the tense, so eat stays plain and goes in the hexagon.',
-        },
-        WHO,
-      ],
-    },
-  ] satisfies readonly BuildRound[],
+  round: {
+    sentence: 'A boy is eating an apple',
+    slots: [
+      { id: 'who', shape: 'oval', slot: 'who', picture: 'boy' },
+      { id: 'tensed', shape: 'diamond' },
+      { id: 'verb', shape: 'hexagon' },
+      { id: 'what', shape: 'rectangle', slot: 'what', picture: 'apple' },
+    ],
+    tokens: [
+      {
+        id: 'verb',
+        label: 'eating',
+        words: [{ text: 'eating', role: 'verb' }],
+        belongs: 'eating does not hold the tense — is does. It goes in the hexagon.',
+      },
+      WHO,
+      WHAT,
+      {
+        id: 'tensed',
+        label: 'is',
+        words: [{ text: 'is', role: 'verb' }],
+        belongs: 'is is the word carrying the tense, and that always sits in the diamond.',
+      },
+    ],
+  } satisfies BuildRound,
 } as const
 
 export type SchoolPoint = {

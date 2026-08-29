@@ -44,11 +44,6 @@
   text-transform: uppercase;
 }
 
-.build__count {
-  color: var(--color-ink-soft);
-  font-size: var(--step--1);
-}
-
 .build__body {
   display: grid;
   gap: var(--space-4);

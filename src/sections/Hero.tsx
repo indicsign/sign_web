@@ -1,6 +1,6 @@
 import { Button } from '../components/Button'
 import { LottieScene } from '../components/LottieScene'
-import { Slideshow } from '../components/Slideshow'
+import { SentencePanel } from '../components/SentencePanel'
 import { APP_URL, CTA_LABEL, hero } from '../content'
 import learnersUrl from '../assets/lottie/boy-girl.json?url'
 import './Hero.css'
@@ -20,7 +20,7 @@ export function Hero() {
         </div>
 
         <div className="hero__panel">
-          <Slideshow />
+          <SentencePanel />
         </div>
       </div>
     </section>

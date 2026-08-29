@@ -7,6 +7,10 @@ import './Features.css'
 /**
  * Each principle demonstrates itself with the real thing rather than an icon: the
  * actual containers, the actual uniform tokens.
+ *
+ * The verb sits in a hexagon, not a diamond. The diamond is the auxiliary — is, are —
+ * and eats is the verb itself. This demo stands a few hundred pixels from the table
+ * that says so, so getting it wrong taught the reader the opposite of the section.
  */
 function Demo({ kind }: { kind: Principle['demo'] }) {
   if (kind === 'shapes') {
@@ -18,7 +22,7 @@ function Demo({ kind }: { kind: Principle['demo'] }) {
             <span className="coded__word coded__word--noun">boy</span>
           </span>
         </span>
-        <span className="coded__shape coded__shape--diamond">
+        <span className="coded__shape coded__shape--hexagon">
           <span className="coded__words">
             <span className="coded__word coded__word--verb">eats</span>
           </span>
