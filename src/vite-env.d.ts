@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
-// vite/client types unknown keys on import.meta.env as `any`. Naming the one this
-// page reads keeps it a string, and keeps `any` out of the codebase.
+// Required, not optional: vite.config.ts refuses to build without it, so by the time
+// any of this runs the value exists. Typing it optional would only invite a fallback
+// back into the source, which is the thing being kept out.
 interface ImportMetaEnv {
-  readonly VITE_SUBPAGE?: string
+  readonly VITE_SUBPAGE: string
 }
