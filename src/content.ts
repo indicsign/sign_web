@@ -1,14 +1,11 @@
-// Every CTA on the page opens this. VITE_SUBPAGE overrides it per environment; Vite
-// inlines VITE_ variables at BUILD time, so it has to be set before `npm run build`
-// and not on the host at run time.
-//
-// The guard is `||`, not `??`: an unset Docker ARG arrives as an empty string rather
-// than undefined, and `??` would let that through as href="".
+// Every CTA on the page opens this. The URL is deliberately not in this repository —
+// it comes from VITE_SUBPAGE, which vite.config.ts refuses to build without, so a
+// missing value stops the build rather than shipping CTAs that go nowhere. Vite
+// inlines VITE_ variables at BUILD time, never at run time.
 //
 // TODO(team): confirm whether the app needs a login before it can be used.
-export const APP_URL =
-  import.meta.env.VITE_SUBPAGE?.trim()
-  
+export const APP_URL = import.meta.env.VITE_SUBPAGE.trim()
+
 export const BRAND = 'Indic Sign'
 export const PRODUCT = 'Indic AI Sign'
 export const LOGO_ALT = 'Indic AI — Foundation for social good'

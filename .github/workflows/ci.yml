@@ -22,7 +22,11 @@ jobs:
       - run: npm ci
       - run: npm run lint
       # `npm run build` typechecks before it bundles, so tsc runs here too.
+      # VITE_SUBPAGE is required: the build refuses to run without it rather than
+      # emitting a page whose calls to action go nowhere.
       - run: npm run build
+        env:
+          VITE_SUBPAGE: ${{ secrets.VITE_SUBPAGE }}
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -40,6 +44,8 @@ jobs:
           context: .
           push: false
           tags: indicai-landing:${{ github.sha }}
+          build-args: |
+            VITE_SUBPAGE=${{ secrets.VITE_SUBPAGE }}
           # Publish pulls these layers back out of the cache, so the image is
           # only ever built once per commit, and it is built before the
           # production environment's protection rules can hold the push.
@@ -65,6 +71,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            VITE_SUBPAGE=${{ secrets.VITE_SUBPAGE }}
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/indicai-landing:latest
             ${{ secrets.DOCKER_USERNAME }}/indicai-landing:${{ github.sha }}

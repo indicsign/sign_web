@@ -8,9 +8,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 # The CTA target. Vite inlines VITE_ variables into the bundle, so it has to be here,
-# at build time — setting it on the host at run time would do nothing. Left unset, the
-# page falls back to the URL in src/content.ts.
-ARG VITE_SUBPAGE=
+# at build time — setting it on the host at run time would do nothing. No default:
+# without --build-arg VITE_SUBPAGE=... the build below fails, which is the point.
+ARG VITE_SUBPAGE
 ENV VITE_SUBPAGE=$VITE_SUBPAGE
 RUN npm run build
 

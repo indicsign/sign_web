@@ -4,8 +4,9 @@ dist
 .github
 .DS_Store
 *.local
-claude.md
-CLAUDE.md
+.claude.md
+.CLAUDE.md
+.__shapecheck.html
 
 # Local secrets and the template documenting them; the image needs neither, and
 # the build stage does a COPY . . that would otherwise pull a local .env in.

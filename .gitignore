@@ -4,3 +4,4 @@ dist
 *.local
 .claude.md
 .env.example
+.__shapecheck.html

@@ -22,7 +22,7 @@ exists.
 Capermint), the syllabus comparison report, or the tense-unit content work.
 Don't scaffold those here.
 
-**Deploy target:** `https://sign.anyserver.site` — served at the domain root from
+**Deploy target:** `https://sign.indic-ai.org` — served at the domain root from
 the nginx image in `Dockerfile`, deployed on Railway. The page should still read as
 part of the Indic AI site rather than a separate product, so match that palette,
 type, and header/footer before inventing anything new. `base: './'` in
