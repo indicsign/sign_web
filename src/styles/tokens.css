@@ -29,6 +29,13 @@
   --color-role-article: #932595;
   --color-role-noun: #b01217;
   --color-role-verb: #2213ca;
+  /* The rest of the framework's word colours. Green, yellow and brown are darkened
+     from the printed key, which measured 2.9, 1.7 and 3.6 on white — yellow in
+     particular cannot be used at its printed value and stay readable. */
+  --color-role-adjective: #146b32;
+  --color-role-preposition: #7a5c00;
+  --color-role-time: #000000;
+  --color-role-adverb: #6f4419;
   /* Container fills by grammatical slot. The framework describes a red oval for Who
      and a yellow upright semi-circle for Where; these are tinted rather than
      saturated so the black outline and the words inside stay legible. */
@@ -62,11 +69,17 @@
   --scene: 18rem;
   --scene-sm: 11rem;
   /* Proportions from the artwork's shape outlines: oval 382x208, diamond 237x205,
-     hexagon 327x199. All one height, width varying by aspect. */
+     hexagon 327x199. All one height, width varying by aspect; the triangles are drawn
+     wider than their outlines because a point leaves far less room for a word than the
+     box around it suggests. */
   --shape-h: 4.8rem;
   --shape-oval-w: 8.8rem;
   --shape-diamond-w: 5.6rem;
   --shape-hex-w: 7.9rem;
+  --shape-rect-w: 8.8rem;
+  --shape-cloud-w: 8.7rem;
+  --shape-tri-w: 8.4rem;
+  --shape-tri-right-w: 9rem;
   --pictogram: 3.6rem;
   --token: 8.5rem;
   --sign: 7.5rem;

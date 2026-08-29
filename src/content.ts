@@ -1,7 +1,14 @@
-// TODO(team): confirm the URL the web app actually opens at, and whether it needs a
-// login first. Every CTA on the page points here.
-export const APP_URL = 'https://gamepeg.com/full/indicai/app/'
-
+// Every CTA on the page opens this. VITE_SUBPAGE overrides it per environment; Vite
+// inlines VITE_ variables at BUILD time, so it has to be set before `npm run build`
+// and not on the host at run time.
+//
+// The guard is `||`, not `??`: an unset Docker ARG arrives as an empty string rather
+// than undefined, and `??` would let that through as href="".
+//
+// TODO(team): confirm whether the app needs a login before it can be used.
+export const APP_URL =
+  import.meta.env.VITE_SUBPAGE?.trim()
+  
 export const BRAND = 'Indic Sign'
 export const PRODUCT = 'Indic AI Sign'
 export const LOGO_ALT = 'Indic AI — Foundation for social good'
@@ -12,22 +19,35 @@ export const nav = {
   skipToContent: 'Skip to content',
   journey: 'The journey',
   words: 'The words',
+  shapes: 'The shapes',
+  schools: 'For schools',
   practice: 'How practice works',
 } as const
 
 export const hero = {
-  title: 'Empowering deaf students with English',
+  title: 'Mastering English for deaf students through the language of visuals',
   body:
-    'A visual learning app that combines Indian Sign Language, lip movements and AI-generated, real-world video. English syntax stops being a phonetic rule you cannot hear and becomes a shape you can see.',
+    'For deaf and hard-of-hearing students, English is usually taught through phonetic rules that do not translate visually. Indic Sign turns English syntax into a visual, logical puzzle instead — Indian Sign Language alongside a proven visual grammar framework, so sentence structure becomes concrete and intuitive for visual learners.',
   ctaNote: 'Made for classrooms and for home.',
 } as const
 
 // Shape Coding, matched to the sentence artwork in "A Boy": an oval holds who or what,
 // with its pictogram standing on it; a diamond holds the verb. Word colour marks the
-// part of speech — article, noun, verb — the way the artwork underlines them.
-export type Shape = 'oval' | 'diamond' | 'hexagon' | 'semicircle'
+// part of speech the way the artwork underlines them. The full framework is nine
+// containers; the sentences on this page use four of them, and the key below shows
+// all nine.
+export type Shape =
+  | 'oval'
+  | 'rectangle'
+  | 'hexagon'
+  | 'cloud'
+  | 'semicircle'
+  | 'triangle'
+  | 'triangle-right'
+  | 'diamond'
+  | 'semicircle-down'
 export type Slot = 'who' | 'what' | 'where'
-export type Role = 'article' | 'noun' | 'verb'
+export type Role = 'article' | 'noun' | 'verb' | 'adjective' | 'preposition' | 'time' | 'adverb'
 
 export type Word = {
   text: string
@@ -44,15 +64,125 @@ export type CodedToken = {
   picture?: 'boy' | 'apple'
 }
 
+export type KeyRow = {
+  /** The grammatical part, as the framework names it. */
+  part: string
+  /** The question a student asks to find it. */
+  question: string
+  shape: Shape
+  slot?: Slot
+  /** An example shown inside the container, coloured the way the framework colours it. */
+  words: readonly Word[]
+  colour: {
+    name: string
+    role: Role
+    /** Set where the colour marks one word rather than the whole phrase. */
+    only?: string
+  }
+}
+
+// The nine containers, in the order the framework's own table lists them. Kept as a
+// plain typed array rather than a const assertion so a row without a slot stays the
+// same shape as one with it.
+const KEY_ROWS: readonly KeyRow[] = [
+  {
+    part: 'Subject',
+    question: 'Who or what?',
+    shape: 'oval',
+    slot: 'who',
+    words: [{ text: 'A', role: 'article' }, { text: 'boy', role: 'noun' }],
+    colour: { name: 'Red', role: 'noun' },
+  },
+  {
+    part: 'Object',
+    question: 'Who or what?',
+    shape: 'rectangle',
+    words: [{ text: 'an', role: 'article' }, { text: 'apple', role: 'noun' }],
+    colour: { name: 'Red', role: 'noun' },
+  },
+  {
+    part: 'Verb',
+    question: 'What doing?',
+    shape: 'hexagon',
+    words: [{ text: 'eating', role: 'verb' }],
+    colour: { name: 'Blue', role: 'verb' },
+  },
+  {
+    part: 'Adjective phrase',
+    question: 'What like, or how feeling?',
+    shape: 'cloud',
+    words: [{ text: 'happy', role: 'adjective' }],
+    colour: { name: 'Green', role: 'adjective' },
+  },
+  {
+    part: 'Prepositional phrase',
+    question: 'Where?',
+    shape: 'semicircle',
+    slot: 'where',
+    words: [{ text: 'at', role: 'preposition' }, { text: 'school' }],
+    colour: { name: 'Yellow', role: 'preposition', only: 'the preposition only' },
+  },
+  {
+    part: 'Time',
+    question: 'When?',
+    shape: 'triangle',
+    words: [{ text: 'today', role: 'time' }],
+    colour: { name: 'Black', role: 'time' },
+  },
+  {
+    part: 'Adverbs and means',
+    question: 'How?',
+    shape: 'triangle-right',
+    words: [{ text: 'quickly', role: 'adverb' }],
+    colour: { name: 'Brown', role: 'adverb', only: 'the adverb only' },
+  },
+  {
+    part: 'Auxiliary verb',
+    question: 'Is or are?',
+    shape: 'diamond',
+    words: [{ text: 'is', role: 'verb' }],
+    colour: { name: 'Blue', role: 'verb' },
+  },
+  {
+    part: 'Second person',
+    question: 'Who is being spoken to?',
+    shape: 'semicircle-down',
+    slot: 'who',
+    words: [{ text: 'you', role: 'noun' }],
+    colour: { name: 'Red', role: 'noun' },
+  },
+]
+
 export const shapeKey = {
-  heading: 'How to read the shapes',
-  items: [
-    { shape: 'oval' as Shape, slot: 'who' as Slot, label: 'A boy', meaning: 'who the sentence is about' },
-    { shape: 'diamond' as Shape, label: 'eats', meaning: 'the word carrying the tense' },
-    { shape: 'hexagon' as Shape, label: 'eating', meaning: 'the verb that follows it' },
-    { shape: 'oval' as Shape, slot: 'what' as Slot, label: 'an apple', meaning: 'what it is done to' },
-  ],
+  heading: 'Every sentence, in nine containers',
+  body:
+    'This is the whole framework. A part of a sentence always takes the same shape and the same colour, so a student who has seen it once can read the structure of a sentence they have never met before.',
+  columns: {
+    part: 'Sentence structure',
+    shape: 'Shape',
+    colour: 'Text colour',
+    example: 'Example',
+  },
+  // Names the scrollable region. Below the breakpoint the table is wider than the
+  // screen, and a region a mouse can scroll has to be reachable from the keyboard too.
+  tableLabel: 'The nine containers',
+  // Two of the nine colours mark one word rather than the whole container, and a
+  // reader who misses that will colour the noun after a preposition yellow.
+  note: 'Yellow marks the preposition itself and brown the adverb itself — the rest of those phrases stays in the plain ink.',
+  items: KEY_ROWS,
 } as const
+
+export const shapeNames = {
+  oval: 'oval',
+  rectangle: 'rectangle',
+  hexagon: 'hexagon',
+  cloud: 'cloud',
+  semicircle: 'semi-circle',
+  triangle: 'triangle',
+  'triangle-right': 'right-facing triangle',
+  diamond: 'diamond',
+  'semicircle-down': 'upside-down semi-circle',
+} satisfies Record<Shape, string>
 
 export type Slide = {
   id: 'past' | 'present' | 'future'
@@ -92,7 +222,7 @@ export type Stage = {
 export const journey = {
   heading: 'A complete English journey',
   body:
-    'Four stages, each building on the one before it. A student moves from single words to whole stories without ever being asked to hear a sound.',
+    'Four stages, each building on the one before it. A student moves from single words to whole stories without ever being asked to hear a sound. The journey completes when they stop only understanding a sentence and start producing one — typing it out, word by word, on a QWERTY keyboard.',
   items: [
     {
       n: 1,
@@ -124,6 +254,8 @@ export const journey = {
 export type Flow = {
   id: string
   title: string
+  /** One line on what the sequence is for, above the steps themselves. */
+  line: string
   steps: readonly string[]
 }
 
@@ -132,19 +264,21 @@ export type Principle = {
   title: string
   body: string
   /** Which mechanic to demonstrate above the words. */
-  demo: 'shapes' | 'tokens' | 'legend'
+  demo: 'shapes' | 'tokens'
 }
 
-// Two of these ideas are sequences and three are properties. Shown as five identical
-// cards they all read as the same kind of thing, which is what made the section flat.
+// Two of these are sequences and two are properties. Shown as four identical cards
+// they would all read as the same kind of thing, which is what made the section flat.
 export const features = {
   heading: 'How the visual grammar framework works',
   body:
-    'English is usually taught through phonetic rules that do not translate visually. Indic Sign steps away from abstract drills and maps sentence structure onto shapes and colours instead — seeing is understanding.',
+    'Seeing is understanding. Indic Sign steps away from abstract grammar drills and uses a structured system of shapes and colours to map out how English sentences are built. A student learns to associate a part of a sentence — the subject, a prepositional phrase — with its own visual container, which is the bridge across to written English.',
+  featuresHeading: 'Key features for literacy acquisition',
   flows: [
     {
       id: 'lesson',
-      title: 'Inside one lesson',
+      title: 'ISL and lip-reading in every lesson',
+      line: 'So a student connects English text straight to the ways they already communicate.',
       steps: [
         'Five seconds of real-world video, so the sentence has a situation before it has words.',
         'An animated ISL translation of that same sentence.',
@@ -153,7 +287,8 @@ export const features = {
     },
     {
       id: 'quiz',
-      title: 'How the quizzes climb',
+      title: 'Progressive interactive quizzes',
+      line: 'Tiered modules, each asking for more than the one before it.',
       steps: [
         'Pick out the correct structure.',
         'Assemble a sentence from scrambled words.',
@@ -165,20 +300,14 @@ export const features = {
     {
       id: 'shapes',
       demo: 'shapes',
-      title: 'Shape-coded building',
-      body: 'Words sit inside grammatical containers, so syntax is recognised by sight rather than by rule.',
+      title: 'Shape-coded sentence building',
+      body: 'Words sit inside grammatical containers — an oval for who, its words in red; an upright semi-circle for where, its preposition in yellow. Syntax is recognised by sight rather than recalled as a rule.',
     },
     {
       id: 'anti-guessing',
       demo: 'tokens',
-      title: 'Nothing to guess from',
-      body: 'Every token and drop zone is one width, so no answer can be read off the length of a word.',
-    },
-    {
-      id: 'legend',
-      demo: 'legend',
-      title: 'The legend, on demand',
-      body: 'The shape and colour rules stay one click away, without leaving the lesson.',
+      title: 'Anti-guessing interface',
+      body: 'Every token and drop zone is one width, so no answer can be read off the length of a word. A student has to apply the vocabulary and the grammar.',
     },
   ] satisfies readonly Principle[],
 } as const
@@ -284,7 +413,7 @@ export const practice = {
   next: 'Next tense',
   // Names the container for a screen reader without naming the role it wants — the
   // shape is on screen either way, the answer is not.
-  shapeNames: { oval: 'oval', diamond: 'diamond', hexagon: 'hexagon', semicircle: 'semi-circle' },
+  shapeNames,
   emptyLabel: 'Empty',
   rounds: [
     {
@@ -364,9 +493,55 @@ export const practice = {
   ] satisfies readonly BuildRound[],
 } as const
 
+export type SchoolPoint = {
+  id: string
+  title: string
+  body: string
+}
+
+// Addressed to a head teacher or a coordinator, not to a student. Everything else on
+// the page is written to the learner; this section is the one that is not.
+export const schools = {
+  tag: 'For schools',
+  heading: 'Pioneering a new paradigm in deaf education',
+  body:
+    'For decades, English grammar has been taught to deaf students with phonetic methods designed for hearing learners. Indic Sign teaches syntax visually instead. Abstract grammatical rules become concrete, so students reach higher-level grammar — and the meaning it carries in context — without relying on sound.',
+  curriculumHeading: 'A comprehensive digital curriculum',
+  curriculumBody:
+    'The platform is built to sit inside a school\'s existing framework, and to support the teacher as well as the student.',
+  points: [
+    {
+      id: 'library',
+      title: 'An expansive content library',
+      body: 'Over a thousand distinct sentence modules — the repetition and the variety that real language acquisition takes.',
+    },
+    {
+      id: 'alignment',
+      title: 'Academic alignment',
+      body: 'Milestones calibrated to meet and exceed the foundational benchmarks expected in the early-primary years, so deaf students have equal access to standard outcomes.',
+    },
+    {
+      id: 'syntax',
+      title: 'From vocabulary to complex syntax',
+      body: 'Past flashcard memorisation: students decode complex sentence structures with the visual grammar framework, learning how and why words fit together to make meaning.',
+    },
+    {
+      id: 'educators',
+      title: 'Empowering educators',
+      body: 'A standardised, engaging way for staff to explain the mechanics of English syntax visually — the app works as an assistive teaching tool, not only a student one.',
+    },
+  ] satisfies readonly SchoolPoint[],
+  partnerHeading: 'Partner with us for inclusive excellence',
+  partnerBody:
+    'Bringing this into your classrooms is a step towards genuine educational equity. Adopting the visual approach lets your school help lead the next generation of inclusive education, and turns frustration into fluency for the students in it.',
+  // TODO(team): no contact route exists yet. Confirm where a school should write to,
+  // and this section gets the button it is currently missing.
+} as const
+
 export const closing = {
-  heading: 'Start learning today',
-  body: 'Made for classrooms and for home. It opens in a browser, so there is nothing to install and nothing to wait for.',
+  heading: 'Empowering inclusive education',
+  body:
+    'The curriculum is built to scale inclusive education — assistive technology that fits into the classroom and into the home. Indic Sign gives students the tools to decode English confidently and independently. It opens in a browser, so there is nothing to install and nothing to wait for.',
 } as const
 
 // TODO(team): replace with the real account URLs. These point at the platforms

@@ -3,7 +3,7 @@ import type { DragEvent } from 'react'
 import { Confetti } from '../components/Confetti'
 import { LottieScene } from '../components/LottieScene'
 import { SectionHeading } from '../components/SectionHeading'
-import { practice, shapeKey } from '../content'
+import { practice } from '../content'
 import { useReveal } from '../reveal'
 import boyPic from '../assets/pictograms/boy.webp'
 import applePic from '../assets/pictograms/apple.webp'
@@ -250,25 +250,6 @@ export function Practice() {
 
           </div>
 
-          <details className="build__key">
-            <summary className="build__key-toggle">{shapeKey.heading}</summary>
-            <ul className="build__key-list">
-              {shapeKey.items.map((item) => (
-                <li className="build__key-item" key={`${item.shape}-${item.label}`}>
-                  <span
-                    className={`coded__shape coded__shape--${item.shape}${
-                      'slot' in item && item.slot ? ` coded__shape--${item.slot}` : ''
-                    }`}
-                  >
-                    <span className="coded__words">
-                      <span className="coded__word">{item.label}</span>
-                    </span>
-                  </span>
-                  <span className="build__key-meaning">{item.meaning}</span>
-                </li>
-              ))}
-            </ul>
-          </details>
         </div>
       </div>
     </section>

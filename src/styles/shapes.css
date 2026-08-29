@@ -28,7 +28,7 @@
 .coded__shape {
   align-items: center;
   display: flex;
-  height: var(--shape-h);
+  height: calc(var(--shape-h) * var(--shape-scale, 1));
   justify-content: center;
   position: relative;
 }
@@ -37,7 +37,7 @@
   background-color: var(--color-shape);
   border: var(--stroke) solid var(--color-shape-line);
   border-radius: 50%;
-  width: var(--shape-oval-w);
+  width: calc(var(--shape-oval-w) * var(--shape-scale, 1));
 }
 
 /* An upright semi-circle: flat along the bottom, curved over the top. */
@@ -45,7 +45,159 @@
   background-color: var(--color-shape);
   border: var(--stroke) solid var(--color-shape-line);
   border-radius: 50% 50% 0 0;
-  width: var(--shape-oval-w);
+  width: calc(var(--shape-oval-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--semicircle .coded__words {
+  padding-inline: var(--space-3);
+}
+
+/* A rectangle for Object, sharing the oval's width so Subject and Object read as the
+   pair they are. */
+.coded__shape--rectangle {
+  background-color: var(--color-shape);
+  border: var(--stroke) solid var(--color-shape-line);
+  width: calc(var(--shape-rect-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--rectangle .coded__words {
+  padding-inline: var(--space-3);
+}
+
+/* Second person: the semi-circle turned over, flat along the top. The words ride up
+   with the flat edge, since the curve takes the room away from the bottom. */
+.coded__shape--semicircle-down {
+  align-items: flex-start;
+  background-color: var(--color-shape);
+  border: var(--stroke) solid var(--color-shape-line);
+  border-radius: 0 0 50% 50%;
+  width: calc(var(--shape-oval-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--semicircle-down .coded__words {
+  padding-inline: var(--space-3);
+  padding-top: var(--space-1);
+}
+
+/* Diamond, hexagon, the two triangles and the cloud are drawn the same way: neither
+   clip-path nor a mask takes a border, so the outline is a second, slightly larger
+   shape stacked behind the fill. A slot fill for one of these belongs on the ::after
+   layer — set on the element it would paint the bounding box instead. */
+.coded__shape--diamond,
+.coded__shape--hexagon,
+.coded__shape--triangle,
+.coded__shape--triangle-right,
+.coded__shape--cloud {
+  background: none;
+  border: none;
+}
+
+.coded__shape--diamond::before,
+.coded__shape--diamond::after,
+.coded__shape--hexagon::before,
+.coded__shape--hexagon::after,
+.coded__shape--triangle::before,
+.coded__shape--triangle::after,
+.coded__shape--triangle-right::before,
+.coded__shape--triangle-right::after,
+.coded__shape--cloud::before,
+.coded__shape--cloud::after {
+  content: '';
+  position: absolute;
+}
+
+.coded__shape--diamond::before,
+.coded__shape--hexagon::before,
+.coded__shape--triangle::before,
+.coded__shape--triangle-right::before,
+.coded__shape--cloud::before {
+  background-color: var(--color-shape-line);
+  inset: 0;
+}
+
+.coded__shape--diamond::after,
+.coded__shape--hexagon::after,
+.coded__shape--triangle::after,
+.coded__shape--triangle-right::after,
+.coded__shape--cloud::after {
+  background-color: var(--color-shape);
+  inset: var(--stroke);
+}
+
+.coded__shape--diamond {
+  width: calc(var(--shape-diamond-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--diamond::before,
+.coded__shape--diamond::after {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.coded__shape--hexagon {
+  width: calc(var(--shape-hex-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--hexagon::before,
+.coded__shape--hexagon::after {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+/* Time: a triangle standing on its base. The words sit low, where the shape is wide. */
+.coded__shape--triangle {
+  align-items: flex-end;
+  width: calc(var(--shape-tri-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--triangle::before,
+.coded__shape--triangle::after {
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.coded__shape--triangle .coded__words {
+  max-width: 60%;
+  padding-bottom: var(--space-1);
+}
+
+/* Adverbs and means: the same triangle turned to point right, so the room is on the
+   left and the words are held there rather than centred into the point. */
+.coded__shape--triangle-right {
+  justify-content: flex-start;
+  width: calc(var(--shape-tri-right-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--triangle-right::before,
+.coded__shape--triangle-right::after {
+  clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+}
+
+.coded__shape--triangle-right .coded__words {
+  max-width: 54%;
+  padding-left: var(--space-2);
+}
+
+/* Adjective phrase: a cloud. Its arcs are past what clip-path's polygon can say, so
+   the two layers are masked from a silhouette instead — a mask reads alpha only, so
+   the colours still come from the tokens above. */
+.coded__shape--cloud {
+  /* Four arcs over a flat base, named here so the two rules below read as a pair
+     rather than repeating the path. */
+  --cloud-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='4 6 142 78' preserveAspectRatio='none'%3E%3Cpath d='M30 84A26 26 0 0 1 30 32A30 30 0 0 1 86 22A24 24 0 0 1 126 38A24 24 0 0 1 130 84Z'/%3E%3C/svg%3E");
+
+  width: calc(var(--shape-cloud-w) * var(--shape-scale, 1));
+}
+
+.coded__shape--cloud::before,
+.coded__shape--cloud::after {
+  -webkit-mask-image: var(--cloud-mask);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: var(--cloud-mask);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+.coded__shape--cloud .coded__words {
+  max-width: 66%;
 }
 
 /* The slot colours the container, so Who and Where are told apart before a word is
@@ -56,56 +208,6 @@
 
 .coded__shape--where {
   background-color: var(--color-slot-where);
-}
-
-.coded__shape--semicircle .coded__words {
-  padding-inline: var(--space-3);
-}
-
-/* Diamond and hexagon are drawn the same way: clip-path takes no border, so the
-   outline is a second, slightly larger shape stacked behind the fill. */
-.coded__shape--diamond,
-.coded__shape--hexagon {
-  background: none;
-  border: none;
-}
-
-.coded__shape--diamond::before,
-.coded__shape--diamond::after,
-.coded__shape--hexagon::before,
-.coded__shape--hexagon::after {
-  content: '';
-  position: absolute;
-}
-
-.coded__shape--diamond::before,
-.coded__shape--hexagon::before {
-  background-color: var(--color-shape-line);
-  inset: 0;
-}
-
-.coded__shape--diamond::after,
-.coded__shape--hexagon::after {
-  background-color: var(--color-shape);
-  inset: var(--stroke);
-}
-
-.coded__shape--diamond {
-  width: var(--shape-diamond-w);
-}
-
-.coded__shape--diamond::before,
-.coded__shape--diamond::after {
-  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}
-
-.coded__shape--hexagon {
-  width: var(--shape-hex-w);
-}
-
-.coded__shape--hexagon::before,
-.coded__shape--hexagon::after {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
 .coded__words {
@@ -150,6 +252,24 @@
 
 .coded__word--verb {
   color: var(--color-role-verb);
+}
+
+.coded__word--adjective {
+  color: var(--color-role-adjective);
+}
+
+/* Yellow marks the preposition itself, not the phrase it opens — the noun after it
+   keeps the default ink, which is what the rule "for prepositions only" means. */
+.coded__word--preposition {
+  color: var(--color-role-preposition);
+}
+
+.coded__word--time {
+  color: var(--color-role-time);
+}
+
+.coded__word--adverb {
+  color: var(--color-role-adverb);
 }
 
 .coded__plain {

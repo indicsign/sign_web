@@ -22,7 +22,7 @@
 .vocabulary__list {
   display: grid;
   gap: var(--space-4) var(--space-3);
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(13rem, 100%), 1fr));
   list-style: none;
   margin: 0;
   padding: 0;

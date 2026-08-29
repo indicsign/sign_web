@@ -266,65 +266,6 @@
   color: var(--color-ink);
 }
 
-/* Folded away: the shapes mostly explain themselves once one is filled. */
-.build__key {
-  background-color: var(--color-surface);
-  border-top: 1px solid var(--color-line);
-  padding: var(--space-3) var(--space-4);
-}
-
-.build__key-toggle {
-  color: var(--color-ink-soft);
-  cursor: pointer;
-  font-family: var(--font-display);
-  font-size: var(--step--1);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.build__key-toggle:hover {
-  color: var(--color-ink);
-}
-
-.build__key-list {
-  display: grid;
-  gap: var(--space-3);
-  list-style: none;
-  margin: 0;
-  padding: var(--space-4) 0 var(--space-2);
-}
-
-.build__key-item {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: var(--step--1);
-  gap: var(--space-2) var(--space-3);
-}
-
-.build__key-item .coded__shape {
-  font-size: var(--step--1);
-  height: calc(var(--shape-h) / 1.7);
-}
-
-.build__key-item .coded__shape--oval,
-.build__key-item .coded__shape--semicircle {
-  width: calc(var(--shape-oval-w) / 1.7);
-}
-
-.build__key-item .coded__shape--diamond {
-  width: calc(var(--shape-diamond-w) / 1.7);
-}
-
-.build__key-item .coded__shape--hexagon {
-  width: calc(var(--shape-hex-w) / 1.7);
-}
-
-.build__key-meaning {
-  color: var(--color-ink-soft);
-}
-
 @media (max-width: 64rem) {
   .practice__inner {
     gap: var(--space-5);

@@ -47,11 +47,14 @@ export function Header() {
           <span className="visually-hidden">{LOGO_ALT}</span>
         </a>
         <nav className="site-header__nav">
-          <a className="site-header__link" href="#journey">
-            {nav.journey}
+          <a className="site-header__link" href="#shapes">
+            {nav.shapes}
           </a>
           <a className="site-header__link" href="#practice">
             {nav.practice}
+          </a>
+          <a className="site-header__link" href="#schools">
+            {nav.schools}
           </a>
           <Button href={APP_URL}>{CTA_LABEL}</Button>
         </nav>

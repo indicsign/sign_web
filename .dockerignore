@@ -7,6 +7,11 @@ dist
 claude.md
 CLAUDE.md
 
+# Local secrets and the template documenting them; the image needs neither, and
+# the build stage does a COPY . . that would otherwise pull a local .env in.
+.env
+.env.*
+
 # Stray top-level copies of the lesson videos; the real ones live in
 # src/assets/video and are imported by the hero.
 *.mp4

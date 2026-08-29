@@ -1,7 +1,21 @@
+/* Names the group without competing with the section's own heading. */
+.features__key {
+  font-size: var(--step-1);
+  margin-bottom: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.flow__line {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-4);
+  margin-top: calc(var(--space-4) * -1 + var(--space-2));
+  max-width: var(--measure);
+}
+
 .features__flows {
   display: grid;
   gap: var(--space-5) var(--space-6);
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
 }
 
 .flow__title {
@@ -58,16 +72,9 @@
 }
 
 .demo--shapes .coded__shape {
+  --shape-scale: 0.62;
+
   font-size: var(--step--1);
-  height: calc(var(--shape-h) * 0.62);
-}
-
-.demo--shapes .coded__shape--oval {
-  width: calc(var(--shape-oval-w) * 0.62);
-}
-
-.demo--shapes .coded__shape--diamond {
-  width: calc(var(--shape-diamond-w) * 0.62);
 }
 
 /* Three words of very different length, all one width — the point made rather than
@@ -91,41 +98,11 @@
   width: calc(var(--token) * 0.62);
 }
 
-.demo--legend {
-  align-items: center;
-}
-
-.demo__chip {
-  align-items: center;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius);
-  color: var(--color-ink-soft);
-  display: flex;
-  font-family: var(--font-display);
-  font-size: var(--step--1);
-  font-weight: 700;
-  gap: var(--space-2);
-  letter-spacing: 0.04em;
-  padding: var(--space-2) var(--space-3);
-  text-transform: uppercase;
-}
-
-/* Sized in em, so the triangle scales with the chip's own text rather than sitting at
-   a 2px stroke width nobody can see. */
-.demo__chevron {
-  border-bottom: 0.3em solid transparent;
-  border-left: 0.42em solid currentColor;
-  border-top: 0.3em solid transparent;
-  height: 0;
-  width: 0;
-}
-
-/* Lighter than the sequences above: statements, not steps. */
 .features__principles {
   border-top: 1px solid var(--color-line);
   display: grid;
   gap: var(--space-4) var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
   list-style: none;
   margin: var(--space-6) 0 0;
   padding: var(--space-5) 0 0;
@@ -152,13 +129,8 @@
     animation-delay: 110ms;
   }
 
-  .reveal--in .principle:nth-child(3) {
-    animation-delay: 220ms;
-  }
-
   .reveal--in .demo--shapes .coded__shape,
-  .reveal--in .demo__token,
-  .reveal--in .demo__chip {
+  .reveal--in .demo__token {
     animation: demo-settle 380ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
   }
 
@@ -180,10 +152,6 @@
 
   .reveal--in .demo__token:nth-child(3) {
     animation-delay: 470ms;
-  }
-
-  .reveal--in .demo__chip {
-    animation-delay: 420ms;
   }
 
   @keyframes principle-in {
